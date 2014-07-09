@@ -21,23 +21,12 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtFeedback 5.0
 import harbour.xbmcremote 1.0
 
 Item {
     id: root
     height: bgImage.height
     width: parent.width
-
-    HapticsEffect {
-        id: rumbleEffect
-        attackIntensity: 0
-        attackTime: 250
-        intensity: 1.0
-        fadeTime: 250
-        fadeIntensity: 0
-        period: 100
-    }
 
     function teaseArrows() {
         teaseTimer.start()
@@ -178,7 +167,6 @@ Item {
         }
 
         onPressAndHold: {
-            rumbleEffect.start(4);
             scrollTimer.start();
         }
 
@@ -246,8 +234,6 @@ Item {
                 print("Only moved " + dx + "x" + dy + " pixels. Not activating gesture");
                 return;
             }
-
-            rumbleEffect.start(2);
 
             // if horizontal delta is larger than twice the minimum distance,
             // we always go left/right, no matter what the vertical delta is.
