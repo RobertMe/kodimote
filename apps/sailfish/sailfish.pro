@@ -3,7 +3,7 @@ include(../../i18n/i18n.pri)
 
 TARGET = harbour-xbmcremote
 
-STORE = ""
+STORE = "harbour"
 
 CONFIG += sailfishapp
 
