@@ -8,8 +8,6 @@ STORE = "harbour"
 CONFIG += sailfishapp
 
 QT += dbus
-INCLUDEPATH += /usr/include/resource/qt5
-PKGCONFIG += libresourceqt5
 
 contains(STORE, harbour) {
     DEFINES += HARBOUR_BUILD=

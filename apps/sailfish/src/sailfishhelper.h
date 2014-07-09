@@ -26,7 +26,6 @@
 #include <QDBusMessage>
 #include <QDBusObjectPath>
 #include <QObject>
-#include <policy/resource-set.h>
 
 class Settings;
 
@@ -40,7 +39,6 @@ private slots:
     void callAdded(const QDBusMessage &msg);
     void callRemoved();
     void connectionChanged(bool connected);
-    bool eventFilter(QObject *obj, QEvent *event);
     void hostRemoved();
 
 private:
@@ -48,7 +46,6 @@ private:
     QMap<QString, QString> unpackMessage(const QDBusArgument &args);
 
     Settings *m_settings;
-    ResourcePolicy::ResourceSet *m_resourceSet;
 
     bool m_videoPaused;
     bool m_musicPaused;

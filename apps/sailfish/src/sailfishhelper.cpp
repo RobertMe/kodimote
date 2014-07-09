@@ -19,10 +19,8 @@
  *                                                                           *
  ****************************************************************************/
 
-#include <QApplicationStateChangeEvent>
 #include <QDBusArgument>
 #include <QDBusConnection>
-#include <QGuiApplication>
 
 #ifndef HARBOUR_BUILD
 #include <QContact>
@@ -44,14 +42,8 @@ using namespace QtContacts;
 
 SailfishHelper::SailfishHelper(Settings *settings, QObject *parent) :
     QObject(parent),
-    m_settings(settings),
-    m_resourceSet(new ResourcePolicy::ResourceSet("player", 0, false, true))
+    m_settings(settings)
 {
-    m_resourceSet->addResourceObject(new ResourcePolicy::ScaleButtonResource);
-    QGuiApplication::instance()->installEventFilter(this);
-
-    m_resourceSet->acquire();
-
     QDBusConnection systemBus = QDBusConnection::systemBus();
     systemBus.connect("org.ofono", "/ril_0", "org.ofono.VoiceCallManager", "CallAdded", this, SLOT(callAdded(QDBusMessage)));
     systemBus.connect("org.ofono", "/ril_0", "org.ofono.VoiceCallManager", "CallRemoved", this, SLOT(callRemoved()));
@@ -76,19 +68,6 @@ void SailfishHelper::connectionChanged(bool connected)
         m_settings->addHost(*Xbmc::instance()->connectedHost());
         m_settings->setLastHost(*Xbmc::instance()->connectedHost());
     }
-}
-
-bool SailfishHelper::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::ApplicationStateChange) {
-        Qt::ApplicationState state = static_cast<QApplicationStateChangeEvent*>(event)->applicationState();
-        if (state == Qt::ApplicationActive) {
-            m_resourceSet->acquire();
-        } else {
-            m_resourceSet->release();
-        }
-    }
-    return QObject::eventFilter(obj, event);
 }
 
 void SailfishHelper::hostRemoved()
