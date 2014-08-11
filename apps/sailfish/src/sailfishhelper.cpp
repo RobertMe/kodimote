@@ -47,47 +47,6 @@ SailfishHelper::SailfishHelper(Settings *settings, QObject *parent) :
     QDBusConnection systemBus = QDBusConnection::systemBus();
     systemBus.connect("org.ofono", "/ril_0", "org.ofono.VoiceCallManager", "CallAdded", this, SLOT(callAdded(QDBusMessage)));
     systemBus.connect("org.ofono", "/ril_0", "org.ofono.VoiceCallManager", "CallRemoved", this, SLOT(callRemoved()));
-
-    // Load stored hosts
-    QString lastHostAddress = settings->lastHost().address();
-    foreach(const XbmcHost &host, settings->hostList()) {
-        int index = Xbmc::instance()->hostModel()->insertOrUpdateHost(host);
-        if(host.address() == lastHostAddress) {
-            qDebug() << "reconnecting to" << host.hostname() << host.address() << host.username() << host.password();
-            Xbmc::instance()->hostModel()->connectToHost(index);
-        }
-    }
-
-    connect(Xbmc::instance(), SIGNAL(connectedChanged(bool)), SLOT(connectionChanged(bool)));
-    connect(Xbmc::instance()->hostModel(), SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(hostRemoved()));
-}
-
-void SailfishHelper::connectionChanged(bool connected)
-{
-    if(connected) {
-        m_settings->addHost(*Xbmc::instance()->connectedHost());
-        m_settings->setLastHost(*Xbmc::instance()->connectedHost());
-    }
-}
-
-void SailfishHelper::hostRemoved()
-{
-    // We need to check if all our stored hosts are still in hostList
-    for(int i = 0; i < m_settings->hostList().count();) {
-        bool found = false;
-        for(int j = 0; j < Xbmc::instance()->hostModel()->rowCount(QModelIndex()); ++j) {
-            if(m_settings->hostList().at(i).address() == Xbmc::instance()->hostModel()->get(j, "address").toString()) {
-                found = true;
-                break;
-            }
-        }
-        if(!found) {
-            m_settings->removeHost(m_settings->hostList().at(i));
-            qDebug() << "removed host" << i;
-        } else {
-            ++i;
-        }
-    }
 }
 
 void SailfishHelper::callAdded(const QDBusMessage &msg)

@@ -164,22 +164,50 @@ void XbmcDiscovery::readDatagram()
             parseDatagram(datagram, index, RecordTypeQuery);
         }
 
-        XbmcHost host;
+        XbmcHost *host = new XbmcHost();
 
         for (int i = 0; i < answerCount; ++i) {
-            parseDatagram(datagram, index, RecordTypeAnswer, &host);
+            parseDatagram(datagram, index, RecordTypeAnswer, host);
         }
 
-        xDebug(XDAREA_DISCOVERY) << "Found host:" << host.hostname() << "IP:" << host.address() << "Port:" << host.port() << "XBMC-JSONRPC:" << host.xbmcJsonrpcSupported() << "XBMC-Web-Server:" << host.xbmcHttpSupported() << "MAC:" << host.hwAddr();
+        xDebug(XDAREA_DISCOVERY) << "Found host:" << host->hostname() << "IP:" << host->address() << "Port:" << host->port() << "XBMC-JSONRPC:" << host->xbmcJsonrpcSupported() << "XBMC-Web-Server:" << host->xbmcHttpSupported() << "MAC:" << host->hwAddr();
 
-        if(!host.address().isEmpty()
-                && host.port() != 0
-                && host.xbmcJsonrpcSupported()
-                && host.xbmcHttpSupported()) {
-
-            Xbmc::instance()->hostModel()->insertOrUpdateHost(host);
+        if(host->address().isEmpty()
+                || host->port() == 0
+                || !host->xbmcJsonrpcSupported()
+                || !host->xbmcHttpSupported()) {
+            host->deleteLater();
+            continue;
         }
 
+        qDebug() << "found host";
+        XbmcHost *existingHost = 0;
+        if (!host->hwAddr().isEmpty()) {
+            // We have a valid HW addr. Lets see if we know the host already
+            existingHost = Xbmc::instance()->hostModel()->findHost(host->hwAddr());
+        } else {
+            // No hw addr around... lets use ip addr to compare.
+            // Using the first one we find, updating port etc.
+            // There's a slight possibility that we overwrite a saved host from another
+            // network here. But assuming the other host has mdns too
+            // it should recover when back to the other network.
+            for (int i = 0; Xbmc::instance()->hostModel()->count(); i++) {
+                XbmcHost *oldhost = Xbmc::instance()->hostModel()->host(i);
+                if (host->address() == oldhost->address()) {
+                    existingHost = oldhost;
+                    break;
+                }
+            }
+        }
+
+        if (existingHost) {
+            existingHost->setAddress(host->address());
+            existingHost->setPort(host->port());
+            existingHost->setHostname(host->hostname());
+            host->deleteLater();
+        } else {
+            Xbmc::instance()->hostModel()->addHost(host);
+        }
     }
 }
 

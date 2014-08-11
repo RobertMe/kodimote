@@ -28,12 +28,25 @@ Dialog {
     canAccept: hostList.currentIndex >= 0
 
     onAccepted: {
-        xbmc.hostModel().wakeup(hostList.currentIndex);
-        xbmc.hostModel().connectToHost(hostList.currentIndex);
+        xbmc.hostModel().host(hostList.currentIndex).connect();
+    }
+
+    Component {
+        id: hostComponent
+
+        XbmcHost {
+        }
     }
 
     function addHost() {
-        pageStack.push(Qt.resolvedUrl("AddHostDialog.qml"));
+        var host = hostComponent.createObject();
+        var hostPage = pageStack.push(Qt.resolvedUrl("AddHostDialog.qml"), { host: host, title: qsTr("Add") });
+        hostPage.onRejected.connect(function() {
+            host.destroy();
+        });
+        hostPage.onAccepted.connect(function() {
+            xbmc.hostModel().addHost(host);
+        });
     }
 
     SilicaListView {
@@ -101,7 +114,7 @@ Dialog {
             }
 
             function wakeupHost() {
-                xbmc.hostModel().wakeup(index);
+                xbmc.hostModel().host(index).wakeup();
             }
 
             function removeHost() {
@@ -125,9 +138,16 @@ Dialog {
                 id: contextMenuComponent
                 ContextMenu {
                     MenuItem {
-                        text: qsTr("Remove host")
+                        text: qsTr("Edit")
                         onClicked: {
-                            hostDelegate.remorseAction(qsTr("Removing host %1").arg(hostname), hostDelegate.removeHost)
+                            var host = xbmc.hostModel().host(index);
+                            var hostPage = pageStack.push(Qt.resolvedUrl("AddHostDialog.qml"), { host: host, title: qsTr("Save") });
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("Remove")
+                        onClicked: {
+                            hostDelegate.remorseAction(qsTr("Removing %1").arg(hostname), hostDelegate.removeHost)
                         }
                     }
                     MenuItem {

@@ -38,8 +38,6 @@ public:
 private slots:
     void callAdded(const QDBusMessage &msg);
     void callRemoved();
-    void connectionChanged(bool connected);
-    void hostRemoved();
 
 private:
     QString lookupContact(QString phoneNumber);

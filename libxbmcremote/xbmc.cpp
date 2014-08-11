@@ -161,6 +161,7 @@ Xbmc::Xbmc(QObject *parent) :
     qmlRegisterType<AudioPlayer>(qmlUri, 1, 0, "Player");
 
     qmlRegisterType<XbmcHostModel>();
+    qmlRegisterType<XbmcHost>(qmlUri, 1, 0, "XbmcHost");
     qmlRegisterType<XbmcDiscovery>(qmlUri, 1, 0, "XbmcDiscovery");
 
     m_hosts = new XbmcHostModel(this);
@@ -543,6 +544,38 @@ void Xbmc::restoreVolume()
 {
     m_volumeAnimation.setDirection(QAbstractAnimation::Backward);
     m_volumeAnimation.start();
+}
+
+void Xbmc::volumeUp()
+{
+    XbmcHost *host = XbmcConnection::connectedHost();
+    if (host) {
+        XbmcHost::VolumeControlType type = host->volumeControlType();
+        if (type == XbmcHost::VolumeControlTypeRelative) {
+            QVariantMap map;
+            map.insert("volume", "increment");
+            XbmcConnection::sendCommand("Application.SetVolume", map);
+        } else {
+            int stepping = host->volumeStepping();
+            this->setVolume(m_volume + stepping);
+        }
+    }
+}
+
+void Xbmc::volumeDown()
+{
+    XbmcHost *host = XbmcConnection::connectedHost();
+    if (host) {
+        XbmcHost::VolumeControlType type = host->volumeControlType();
+        if (type == XbmcHost::VolumeControlTypeRelative) {
+            QVariantMap map;
+            map.insert("volume", "decrement");
+            XbmcConnection::sendCommand("Application.SetVolume", map);
+        } else {
+            int stepping = host->volumeStepping();
+            this->setVolume(m_volume - stepping);
+        }
+    }
 }
 
 void Xbmc::sendNotification(const QString &header, const QString &text)

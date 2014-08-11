@@ -34,7 +34,6 @@ OTHER_FILES += \
     qml/icons/icon-cover-stop.png \
     qml/pages/ConnectionDialog.qml \
     qml/components/MenuPlayerControls.qml \
-    qml/pages/QuitDialog.qml \
     qml/pages/AboutDialog.qml \
     qml/pages/AuthenticationDialog.qml \
     qml/components/ItemDetails.qml \
@@ -47,5 +46,6 @@ OTHER_FILES += \
     qml/pages/PlaylistPage.qml \
     qml/pages/MediaSelectionDialog.qml \
     qml/pages/Keypad.qml \
-    qml/components/GesturePad.qml
+    qml/components/GesturePad.qml \
+    qml/pages/XbmcPage.qml
 

@@ -19,9 +19,10 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.Popups 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItems
+import QtQuick.Layouts 1.1
+import Ubuntu.Components 1.1
+import Ubuntu.Components.Popups 1.0
+import Ubuntu.Components.ListItems 1.0 as ListItems
 import Xbmc 1.0
 import "components"
 
@@ -32,16 +33,20 @@ MainView {
     backgroundColor: "#0c2e71"
     footerColor: "#0a2663"
 
+    property bool overrideColor: false
+
     property int pageMargins: units.gu(2)
     property var inputDialog
 
+    useDeprecatedToolbar: false
+
     focus: true
     Keys.onVolumeUpPressed: {
-        xbmc.volume += 5;
+        xbmc.volumeUp();
     }
 
     Keys.onVolumeDownPressed: {
-        xbmc.volume -= 5;
+        xbmc.volumeDown();
     }
 
     Loader {
@@ -100,7 +105,7 @@ MainView {
         id: noConnectionComponent
         Page {
             id: noConnectionPage
-            title: "Select Host"
+            title: xbmc.connecting ? qsTr("Connecting...") : qsTr("Select Host")
             anchors.fill: parent
             property bool showList: !xbmc.connecting
 
@@ -117,7 +122,7 @@ MainView {
 
                     onClicked: {
                         noConnectionPage.showList = false
-                        xbmc.hostModel().connectToHost(index)
+                        xbmc.hostModel().host(index).connect()
                     }
 
                     onPressAndHold: {
@@ -127,8 +132,11 @@ MainView {
                             PopupUtils.close(obj)
                         })
                         obj.wakeupClicked.connect(function() {
-                            xbmc.hostModel().wakeup(index)
+                            xbmc.hostModel().host(index).wakeup();
                             PopupUtils.close(obj)
+                        })
+                        obj.editClicked.connect(function() {
+                            PopupUtils.open(addHostComponent, noConnectionPage, {host: xbmc.hostModel().host(index)});
                         })
                     }
                 }
@@ -150,7 +158,7 @@ MainView {
                     }
 
                     Label {
-                        fontSize: "medium"
+                        fontSize: "small"
                         width: parent.width
                         wrapMode: Text.WordWrap
                         text: qsTr("Searching for XBMC hosts.") + "\n" + "\n"
@@ -182,7 +190,6 @@ MainView {
 
                 Label {
                     id: label
-                    anchors.horizontalCenter: parent.horizontalCenter
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -191,6 +198,15 @@ MainView {
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                 }
+                Label {
+                    fontSize: "small"
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Please enable the following options in the Services settings of XBMC:") + "\n- "
+                          + qsTr("Allow control of XBMC via HTTP") + "\n- "
+                          + qsTr("Allow programs on other systems to control XBMC")
+                }
+
                 Button{
                     text: qsTr("Cancel")
                     anchors {
@@ -204,13 +220,27 @@ MainView {
                 }
             }
 
-
             tools: ToolbarItems {
                 ToolbarButton {
-                    text: "add"
-                    iconSource: "/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg"
-                    onTriggered: {
-                        PopupUtils.open(addHostComponent, noConnectionPage)
+                    action: Action {
+                        text: "add"
+                        iconName: "add"
+                        visible: noConnectionPage.showList
+                        onTriggered: {
+                            var newHost = newHostComponent.createObject();
+                            var popup = PopupUtils.open(addHostComponent, noConnectionPage, {host: newHost});
+                            popup.rejected.connect(function() {
+                                newHost.destroy();
+                            })
+                            popup.accepted.connect(function() {
+                                xbmc.hostModel().addHost(newHost);
+                            })
+                        }
+
+                    }
+                    Component {
+                        id: newHostComponent
+                        XbmcHost {}
                     }
                 }
             }
@@ -222,18 +252,24 @@ MainView {
             id: popover
             signal removeClicked()
             signal wakeupClicked()
+            signal editClicked()
             Column {
                 height: childrenRect.height
                 width: parent.width
                 ListItems.Standard {
                     text: qsTr("Remove")
-                    icon: "/usr/share/icons/ubuntu-mobile/actions/scalable/delete.svg"
+                    iconName: "delete"
                     onClicked: popover.removeClicked()
                 }
                 ListItems.Standard {
                     text: qsTr("Wake up")
-                    icon: "/usr/share/icons/ubuntu-mobile/actions/scalable/torch-on.svg"
+                    iconName: "torch-on"
                     onClicked: popover.wakeupClicked()
+                }
+                ListItems.Standard {
+                    text: qsTr("Edit")
+                    iconName: "edit"
+                    onClicked: popover.editClicked();
                 }
             }
         }
@@ -243,7 +279,13 @@ MainView {
         id: addHostComponent
         Dialog {
             id: addHostDialog
-            title: qsTr("Add host")
+            title: qsTr("Host settings")
+
+            property var host
+
+            signal accepted();
+            signal rejected();
+
             Item {
                 width: parent.width
                 height: units.gu(40)
@@ -261,10 +303,13 @@ MainView {
                         spacing: units.gu(1)
                         Label {
                             text: qsTr("Name:")
+                            color: "black"
                         }
                         TextField {
                             id: nameTextField
                             width: parent.width
+                            text: addHostDialog.host.hostname
+                            color: "black"
                             property bool conflicting: false
 
                             onTextChanged: {
@@ -292,26 +337,98 @@ MainView {
                         }
                         Label {
                             text: qsTr("Hostname or IP Address:")
+                            color: "black"
                         }
                         TextField {
                             id: addressTextField
                             width: parent.width
+                            text: addHostDialog.host.address
+                            color: "black"
                         }
                         Label {
                             text: qsTr("Port:")
+                            color: "black"
                         }
                         TextField {
                             id: portTextField
-                            text: "8080"
+                            text: addHostDialog.host.port ? addHostDialog.host.port : "8080"
                             width: parent.width
+                            color: "black"
                         }
                         Label {
                             text: qsTr("Mac Address:")
+                            color: "black"
                         }
                         TextField {
                             id: macTextField
                             width: parent.width
                             inputMask: "HH:HH:HH:HH:HH:HH;_"
+                            color: "black"
+                            text: addHostDialog.host.hwAddr
+                        }
+
+                        SectionHeader {
+                            headerText: qsTr("Volume")
+                            color: "black"
+                        }
+
+                        OptionSelector {
+                            id: volumeControlTypeSelector
+                            model: [qsTr("Custom Stepping"), qsTr("Up or down"), qsTr("Custom script")]
+                            selectedIndex: addHostDialog.host.volumeControlType
+
+                            // Hack... OptionSelector doesn't let us set the color and uitk is buggy with colors atm
+                            delegate: OptionSelectorDelegate {
+                                text: " "
+                                Label {
+                                    anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
+                                    text: modelData
+                                    color: "black"
+                                }
+                            }
+                        }
+
+                        RowLayout {
+                            visible: volumeControlTypeSelector.selectedIndex !== 1
+                            Label { text: "0"; color: "black" }
+                            anchors { left: parent.left; right: parent.right }
+                            spacing: units.gu(1)
+                            Slider {
+                                id: volumeSteppingSlider
+                                value: addHostDialog.host.volumeStepping
+                                Layout.fillWidth: true
+                            }
+                            Label { text: "100"; color: "black" }
+                        }
+
+                        Label {
+                            text: qsTr("Up command"); color: "black";
+                            visible: volumeControlTypeSelector.selectedIndex === 2
+                        }
+                        TextField {
+                            id: volumeUpCommandTextField
+                            width: parent.width
+                            visible: volumeControlTypeSelector.selectedIndex === 2
+                            text: host.volumeUpCommand
+                            placeholderText: qsTr("Up command")
+                            color: "black"
+                        }
+
+                        Label {
+                            text: qsTr("Down command"); color: "black"
+                            visible: volumeControlTypeSelector.selectedIndex === 2
+                        }
+                        TextField {
+                            id: volumeDownCommandTextField
+                            width: parent.width
+                            visible: volumeControlTypeSelector.selectedIndex === 2
+                            text: host.volumeDownCommand
+                            placeholderText: qsTr("Down command")
+                            color: "black"
+                        }
+
+                        SectionHeader {
+                            color: "black"
                         }
                         Row {
                             width: parent.width
@@ -319,7 +436,10 @@ MainView {
                             Button {
                                 text: qsTr("Cancel")
                                 width: (parent.width - parent.spacing) / 2
-                                onClicked: PopupUtils.close(addHostDialog)
+                                onClicked: {
+                                    addHostDialog.rejected();
+                                    PopupUtils.close(addHostDialog)
+                                }
                             }
                             Button {
                                 text: qsTr("OK")
@@ -327,11 +447,21 @@ MainView {
                                 color: "#dd4814"
                                 enabled: nameTextField.text.length > 0 && !nameTextField.conflicting && addressTextField.text.length > 0
                                 onClicked: {
-                                    xbmc.hostModel().createHost(nameTextField.text, addressTextField.text, portTextField.text, macTextField.text)
+                                    addHostDialog.host.hostname = nameTextField.text
+                                    addHostDialog.host.address = addressTextField.text
+                                    addHostDialog.host.port = portTextField.text
+                                    addHostDialog.host.hwAddr = macTextField.text
+
+                                    addHostDialog.host.volumeControlType = volumeControlTypeSelector.selectedIndex
+                                    addHostDialog.host.volumeStepping = volumeSteppingSlider.value
+                                    addHostDialog.host.volumeUpCommand = volumeUpCommandTextField.text
+                                    addHostDialog.host.volumeDownCommand = volumeDownCommandTextField.text
+                                    addHostDialog.accepted();
                                     PopupUtils.close(addHostDialog)
                                 }
                             }
                         }
+
                         Item {
                             width: parent.width
                             height: Qt.inputMethod.keyboardRectangle.height
@@ -350,46 +480,41 @@ MainView {
 
     Component {
         id: mainComponent
-        Tabs {
-            id: tabs
-            property int oldTabIndex: -1
-            onSelectedTabIndexChanged: {
-                if (oldTabIndex > 0 && selectedTabIndex == 0) {
-                    resetToolBars()
-                }
-                oldTabIndex = selectedTabIndex;
+        PageStack {
+            id: pageStack
+            Component.onCompleted: push(mainPage)
 
-            }
-            onSelectedTabChanged: {
-                if (selectedTab == keypadTab) {
-                    keypad.teaseArrows();
-                }
-            }
-            Tab {
-                title: qsTr("Media")
-                page: PageStack {
-                    id: pageStack
-                    Component.onCompleted: push(mainPage)
-                    onCurrentPageChanged: resetToolBars()
-                    MainPage {
-                        id: mainPage
-                        visible: false
+            MainPage {
+                id: mainPage
+                visible: false
 
-                    }
+                keypadVisible: true
+                nowPlayingVisible: true
+
+                onGoToNowPlaying: pageStack.push(nowPlayingPage)
+                onGoToKeypad: pageStack.push(keypad)
+            }
+            NowPlayingPage {
+                id: nowPlayingPage
+                timerActive: pageStack.currentPage == nowPlayingPage
+                visible: false
+
+                keypadVisible: true
+
+                onGoToKeypad: {
+                    pageStack.pop()
+                    pageStack.push(keypad)
                 }
             }
-            Tab {
-                id: nowPlayingTab
-                title: qsTr("Now playing")
-                page: NowPlayingPage {
-                    timerActive: tabs.selectedTabIndex === 1
-                }
-            }
-            Tab {
-                id: keypadTab
-                title: qsTr("Keypad")
-                page: Keypad {
-                    id: keypad
+            Keypad {
+                id: keypad
+                visible: false
+
+                nowPlayingVisible: true
+
+                onGoToNowPlaying: {
+                    pageStack.pop();
+                    pageStack.push(nowPlayingPage)
                 }
             }
         }

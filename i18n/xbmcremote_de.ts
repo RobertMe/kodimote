@@ -1,8 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
     <name>AboutDialog</name>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AboutDialog.qml" line="80"/>
+        <location filename="../apps/generic/ui/aboutdialog.cpp" line="73"/>
+        <source>Donate</source>
+        <translation>Spenden</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AboutDialog.qml" line="85"/>
+        <location filename="../apps/generic/ui/aboutdialog.cpp" line="77"/>
+        <source>Flattr</source>
+        <translation>Flattr</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/AboutDialog.qml" line="64"/>
+        <location filename="../apps/generic/ui/aboutdialog.cpp" line="69"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
     <message>
         <location filename="../apps/generic/ui/aboutdialog.cpp" line="36"/>
         <source>About</source>
@@ -18,20 +34,74 @@
         <source>Thanks to</source>
         <translation>Danke an</translation>
     </message>
+</context>
+<context>
+    <name>AddHostDialog</name>
     <message>
-        <location filename="../apps/generic/ui/aboutdialog.cpp" line="69"/>
-        <source>Close</source>
-        <translation>Schließen</translation>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="50"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="51"/>
+        <source>Name</source>
+        <translation>Name</translation>
     </message>
     <message>
-        <location filename="../apps/generic/ui/aboutdialog.cpp" line="73"/>
-        <source>Donate</source>
-        <translation>Spenden</translation>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="86"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="87"/>
+        <source>Hostname or IP Address</source>
+        <translation>Rechnername/IP Adresse</translation>
     </message>
     <message>
-        <location filename="../apps/generic/ui/aboutdialog.cpp" line="77"/>
-        <source>Flattr</source>
-        <translation>Flattr</translation>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="99"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="100"/>
+        <source>Port</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="112"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="113"/>
+        <source>Mac Address</source>
+        <translation>MAC Adresse</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="121"/>
+        <source>Volume</source>
+        <translation>Lautstärke</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="129"/>
+        <source>Control type</source>
+        <translation>Art der Steuerung</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="133"/>
+        <source>Custom stepping</source>
+        <translation>Absolut</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="136"/>
+        <source>Up or down</source>
+        <translation>Relativ</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="139"/>
+        <source>Custom script</source>
+        <translation>Script</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="151"/>
+        <source>Stepping</source>
+        <translation>Schrittgröße</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="164"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="165"/>
+        <source>Up command</source>
+        <translation>Befehl zum erhöhen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="174"/>
+        <location filename="../apps/sailfish/qml/pages/AddHostDialog.qml" line="175"/>
+        <source>Down command</source>
+        <translation>Befehl zum senken</translation>
     </message>
 </context>
 <context>
@@ -75,7 +145,7 @@
     <message>
         <location filename="../libxbmcremote/audiolibrary.cpp" line="53"/>
         <source>Recently played</source>
-        <translation>Kürzlich abgespielt</translation>
+        <translation>Kürzlich gespielt</translation>
     </message>
     <message>
         <location filename="../libxbmcremote/audiolibrary.cpp" line="89"/>
@@ -89,12 +159,12 @@
         <location filename="../apps/generic/qml/AudioPlaylist.qml" line="64"/>
         <location filename="../libxbmcremote/audioplaylist.cpp" line="152"/>
         <source>Now Playing</source>
-        <translation>Jetzt gespielt</translation>
+        <translation>Spielt</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/AudioPlaylist.qml" line="64"/>
         <source>Playlist</source>
-        <translation>Wiedergabelist</translation>
+        <translation>Wiedergabeliste</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/AudioPlaylist.qml" line="204"/>
@@ -104,12 +174,12 @@
     <message>
         <location filename="../apps/generic/qml/AudioPlaylist.qml" line="205"/>
         <source>Remove from playlist</source>
-        <translation>Aus Wiedergabeliste entfernen</translation>
+        <translation>Aus Liste entfernen</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/AudioPlaylist.qml" line="206"/>
         <source>Clear playlist</source>
-        <translation>Wiedergabeliste leeren</translation>
+        <translation>Liste löschen</translation>
     </message>
     <message>
         <location filename="../libxbmcremote/audioplaylist.cpp" line="152"/>
@@ -120,14 +190,32 @@
 <context>
     <name>AuthenticationDialog</name>
     <message>
-        <location filename="../apps/generic/ui/authenticationdialog.cpp" line="35"/>
-        <source>Authentication</source>
-        <translation>Authentifizierung</translation>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="32"/>
+        <source>Authenticate</source>
+        <translation>Authentifizieren</translation>
     </message>
     <message>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="47"/>
         <location filename="../apps/generic/ui/authenticationdialog.cpp" line="47"/>
         <source>XBMC on %1 requires authentication:</source>
-        <translation>XBMC auf %1 verlangt authentifizierung:</translation>
+        <translation>XBMC auf %1 benötigt Anmeldedaten:</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="56"/>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="57"/>
+        <source>Username</source>
+        <translation>Benutzername</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="67"/>
+        <location filename="../apps/sailfish/qml/pages/AuthenticationDialog.qml" line="68"/>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <location filename="../apps/generic/ui/authenticationdialog.cpp" line="35"/>
+        <source>Authentication</source>
+        <translation>Anmeldung</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/authenticationdialog.cpp" line="53"/>
@@ -155,7 +243,7 @@
     <message>
         <location filename="../apps/harmattan/qml/AuthenticationSheet.qml" line="39"/>
         <source>XBMC on %1 requires authentication:</source>
-        <translation>XBMC auf %1 verlangt authentifizierung:</translation>
+        <translation>XBMC auf %1 benötigt Anmeldedaten:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/AuthenticationSheet.qml" line="43"/>
@@ -163,7 +251,7 @@
         <translation>Benutzername:</translation>
     </message>
     <message>
-        <location filename="../apps/harmattan/qml/AuthenticationSheet.qml" line="52"/>
+        <location filename="../apps/harmattan/qml/AuthenticationSheet.qml" line="53"/>
         <source>Password:</source>
         <translation>Passwort:</translation>
     </message>
@@ -178,24 +266,34 @@
     <message>
         <location filename="../apps/plasmoid/qml/Browser.qml" line="113"/>
         <source>Clean library</source>
-        <translation>Bibliothek bereinigen</translation>
+        <translation>Bibliothek säubern</translation>
     </message>
 </context>
 <context>
     <name>BrowserPage</name>
     <message>
-        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="40"/>
-        <location filename="../blubb/qml/BrowserPage.qml" line="41"/>
+        <location filename="../apps/sailfish/qml/pages/BrowserPage.qml" line="58"/>
+        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="472"/>
         <source>Home</source>
-        <translation>Startansicht</translation>
+        <translation>Home</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="50"/>
-        <source>Watched</source>
-        <translation>Gesehene</translation>
+        <location filename="../apps/sailfish/qml/pages/BrowserPage.qml" line="65"/>
+        <source>Keypad</source>
+        <translation>Tastenfeld</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="58"/>
+        <location filename="../apps/sailfish/qml/pages/BrowserPage.qml" line="72"/>
+        <source>Now playing</source>
+        <translation>Jetzt abgespielt</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="482"/>
+        <source>Show watched</source>
+        <translation>Gesehene einblenden</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/BrowserPage.qml" line="491"/>
         <source>Sorting</source>
         <translation>Sortierung</translation>
     </message>
@@ -226,7 +324,7 @@
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="52"/>
         <source>Searching for XBMC hosts.</source>
-        <translation>Suche XBMC.</translation>
+        <translation>Suche XBMC Hosts.</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="53"/>
@@ -241,7 +339,7 @@
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="55"/>
         <source>Allow programs on other systems to control XBMC</source>
-        <translation>Stuerung über entfernte Programme zulassen</translation>
+        <translation>Steuerung über entfernte Programme zulassen</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="56"/>
@@ -251,7 +349,7 @@
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="57"/>
         <source>If you don&apos;t use Zeroconf, add a host manually.</source>
-        <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie den Ihr XBMC manuell hinzu.</translation>
+        <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie Ihren XBMC Host manuell hinzu.</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/connectdialog.cpp" line="76"/>
@@ -291,6 +389,84 @@
     </message>
 </context>
 <context>
+    <name>ConnectionDialog</name>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="43"/>
+        <source>Add</source>
+        <translation>Hinzufügen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="60"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="61"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="88"/>
+        <source>Searching for XBMC hosts.</source>
+        <translation>Suche XBMC</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="89"/>
+        <source>Please enable the following options in the Services settings of XBMC:</source>
+        <translation>Bitte aktivieren Sie folgende Einstellungen in den Dienst-Einstellungen von XBMC:</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="90"/>
+        <source>Allow control of XBMC via HTTP</source>
+        <translation>Steuer über HTTP zulassen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="91"/>
+        <source>Allow programs on other systems to control XBMC</source>
+        <translation>Steuerung über entfernte Programme zulassen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="92"/>
+        <source>Announce these services to other systems via Zeroconf</source>
+        <translation>Zeroconf-Veröffentlichung</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="93"/>
+        <source>If you don&apos;t use Zeroconf, add a host manually.</source>
+        <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie den Ihr XBMC manuell hinzu.</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="100"/>
+        <source>Add host</source>
+        <translation>Host hinzufügen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="141"/>
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="144"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="148"/>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="150"/>
+        <source>Removing %1</source>
+        <translation>Entferne %1</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/ConnectionDialog.qml" line="154"/>
+        <source>Wake up</source>
+        <translation>Aufwecken</translation>
+    </message>
+</context>
+<context>
     <name>ConnectionSheet</name>
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="29"/>
@@ -305,7 +481,7 @@
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="81"/>
         <source>Searching for XBMC hosts.</source>
-        <translation>Suche XBMC.</translation>
+        <translation>Suche XBMC Hosts.</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="82"/>
@@ -320,7 +496,7 @@
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="84"/>
         <source>Allow programs on other systems to control XBMC</source>
-        <translation>Stuerung über entfernte Programme zulassen</translation>
+        <translation>Steuerung über entfernte Programme zulassen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="85"/>
@@ -330,7 +506,7 @@
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="86"/>
         <source>If you don&apos;t use Zeroconf, add a host manually.</source>
-        <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie den Ihr XBMC manuell hinzu.</translation>
+        <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie Ihren XBMC Host manuell hinzu.</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="128"/>
@@ -365,12 +541,30 @@
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="206"/>
         <source>MAC Address for WakeOnLan (optional):</source>
-        <translation>MAC Adresse für WakeOnLan (optional):</translation>
+        <translation>MAC Adresse (optional):</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ConnectionSheet.qml" line="217"/>
         <source>Back</source>
         <translation>Zurück</translation>
+    </message>
+</context>
+<context>
+    <name>CoverPage</name>
+    <message>
+        <location filename="../apps/sailfish/qml/cover/CoverPage.qml" line="138"/>
+        <source>XBMC on</source>
+        <translation>XBMC auf</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/cover/CoverPage.qml" line="155"/>
+        <source>XBMC remote</source>
+        <translation>Xbmcremote</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/cover/CoverPage.qml" line="156"/>
+        <source>Disconnected</source>
+        <translation>Getrennt</translation>
     </message>
 </context>
 <context>
@@ -401,12 +595,12 @@
     <message>
         <location filename="../apps/harmattan/qml/DownloadDialog.qml" line="35"/>
         <source>Start download?</source>
-        <translation>Herunterladen starten?</translation>
+        <translation>Download starten?</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/DownloadDialog.qml" line="49"/>
         <source>Start downloading %1?</source>
-        <translation>Starte Kopiervorgang für %1?</translation>
+        <translation>Download von %1 beginnen?</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/DownloadDialog.qml" line="58"/>
@@ -503,178 +697,178 @@
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="113"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="64"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="68"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="76"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="71"/>
         <source>Rating:</source>
         <translation>Bewertung:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="119"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="83"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="92"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="94"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="89"/>
         <source>Season:</source>
         <translation>Staffel:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="125"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="89"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="98"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="100"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="95"/>
         <source>Episode:</source>
         <translation>Folge:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="131"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="95"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="103"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="106"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="101"/>
         <source>First aired:</source>
         <translation>Erstausstrahlung:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="137"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="101"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="108"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="112"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="107"/>
         <source>Genre:</source>
         <translation>Genre:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="143"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="107"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="113"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="118"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="113"/>
         <source>Year:</source>
         <translation>Jahr:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="149"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="113"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="118"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="124"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="119"/>
         <source>Director:</source>
-        <translation>Direktor:</translation>
+        <translation>Regisseur:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="155"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="119"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="123"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="130"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="125"/>
         <source>Tagline:</source>
-        <translation>Kurzbeschreibung:</translation>
+        <translation>Titelzeile:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="161"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="125"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="128"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="136"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="131"/>
         <source>MPAA:</source>
         <translation>Altersfreigabe:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="167"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="131"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="133"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="142"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="137"/>
         <source>Instrument:</source>
         <translation>Instrument:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="173"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="137"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="138"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="148"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="143"/>
         <source>Style:</source>
         <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="179"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="143"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="143"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="154"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="149"/>
         <source>Mood:</source>
         <translation>Stimmung:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="185"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="149"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="148"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="160"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="155"/>
         <source>Born:</source>
         <translation>Geboren:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="191"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="155"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="153"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="166"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="161"/>
         <source>Formed:</source>
-        <translation>Zusammenschluß:</translation>
+        <translation>Formiert:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="197"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="161"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="158"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="172"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="167"/>
         <source>Died:</source>
         <translation>Gestorben:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="203"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="167"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="163"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="178"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="173"/>
         <source>Disbanded:</source>
-        <translation>Getrennt:</translation>
+        <translation>Aufgelöst:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="209"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="173"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="168"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="184"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="179"/>
         <source>Duration:</source>
         <translation>Dauer:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="215"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="179"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="173"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="190"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="185"/>
         <source>Comment:</source>
         <translation>Kommentar:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="221"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="185"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="178"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="196"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="191"/>
         <source>Playcount:</source>
         <translation>Zähler:</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/ItemDetails.qml" line="227"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="191"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="183"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="202"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="197"/>
         <source>Cast:</source>
         <translation>Besetzung:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="249"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="273"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="49"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="220"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="215"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="253"/>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="277"/>
+        <location filename="../apps/sailfish/qml/components/ItemDetails.qml" line="45"/>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="225"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="220"/>
         <source>Add to playlist</source>
-        <translation>Zur Wiedergabeliste hinzufügen</translation>
+        <translation>Zur Wiedergabeliste</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/ItemDetails.qml" line="257"/>
@@ -684,9 +878,34 @@
     </message>
     <message>
         <location filename="../apps/ubuntu/qml/ItemDetails.qml" line="88"/>
-        <location filename="../blubb/qml/ItemDetails.qml" line="83"/>
         <source>Title:</source>
         <translation>Titel:</translation>
+    </message>
+</context>
+<context>
+    <name>Keypad</name>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="54"/>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="70"/>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="88"/>
+        <location filename="../apps/ubuntu/qml/Keypad.qml" line="28"/>
+        <source>Keypad</source>
+        <translation>Tastenfeld</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="63"/>
+        <source>Media</source>
+        <translation>Medien</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="76"/>
+        <source>Now playing</source>
+        <translation>Jetzt gespielt</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/Keypad.qml" line="88"/>
+        <source>Pictures</source>
+        <translation>Bilder</translation>
     </message>
 </context>
 <context>
@@ -699,7 +918,7 @@
     <message>
         <location filename="../apps/generic/qml/LibraryView.qml" line="220"/>
         <source>Add to playlist</source>
-        <translation>Zur Wiedergabeliste hinzufügen</translation>
+        <translation>Zur Wiedergabeliste</translation>
     </message>
     <message>
         <location filename="../apps/generic/qml/LibraryView.qml" line="221"/>
@@ -721,120 +940,119 @@
     <name>MainPage</name>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="49"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="30"/>
-        <location filename="../blubb/qml/MainPage.qml" line="29"/>
         <source>XBMC on %1</source>
         <translation>XBMC auf %1</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="91"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="92"/>
-        <location filename="../blubb/qml/MainPage.qml" line="103"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="302"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="79"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="94"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="95"/>
-        <location filename="../blubb/qml/MainPage.qml" line="106"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="305"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="82"/>
         <source>Videos</source>
         <translation>Videos</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="97"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="98"/>
-        <location filename="../blubb/qml/MainPage.qml" line="109"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="308"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="85"/>
         <source>Pictures</source>
         <translation>Bilder</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="100"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="101"/>
-        <location filename="../blubb/qml/MainPage.qml" line="112"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="311"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="88"/>
         <source>TV Channels</source>
-        <translation>Fernsehkanäle</translation>
+        <translation>TV Kanäle</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="193"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="198"/>
-        <location filename="../blubb/qml/MainPage.qml" line="209"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="181"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="196"/>
         <source>Library</source>
         <translation>Bibliothek</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="195"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="198"/>
-        <location filename="../blubb/qml/MainPage.qml" line="209"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="183"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="196"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="267"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="304"/>
-        <location filename="../blubb/qml/MainPage.qml" line="306"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="207"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="302"/>
         <source>Show files</source>
         <translation>Zeige Dateien</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="280"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="307"/>
-        <location filename="../blubb/qml/MainPage.qml" line="309"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="215"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="305"/>
         <source>Show library</source>
         <translation>Zeige Bibliothek</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="293"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="310"/>
-        <location filename="../blubb/qml/MainPage.qml" line="312"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="222"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="308"/>
         <source>Rescan library</source>
         <translation>Bibliothek aktualisieren</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/MainPage.qml" line="309"/>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="311"/>
-        <location filename="../blubb/qml/MainPage.qml" line="313"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="230"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="309"/>
         <source>Clean library</source>
         <translation>Bibliothek bereinigen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/MainPage.qml" line="40"/>
-        <source>Options</source>
-        <translation>Optionen</translation>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="92"/>
+        <source>Browse %1</source>
+        <translation>Durchsuche %1</translation>
     </message>
     <message>
-        <location filename="../blubb/qml/MainPage.qml" line="38"/>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="104"/>
+        <source>Keypad</source>
+        <translation>Tastenfeld</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="111"/>
+        <source>Now playing</source>
+        <translation>Jetzt gespielt</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="121"/>
+        <source>Change connection...</source>
+        <translation>Verbindung trennen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="127"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../blubb/qml/MainPage.qml" line="51"/>
-        <source>Disconnect</source>
-        <translation>Trennen</translation>
+        <location filename="../apps/sailfish/qml/pages/MainPage.qml" line="134"/>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="345"/>
+        <source>About</source>
+        <translation>Über</translation>
     </message>
     <message>
-        <location filename="../blubb/qml/MainPage.qml" line="346"/>
-        <source>Quit</source>
-        <translation>Beenden</translation>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="31"/>
+        <source>Media Browser</source>
+        <translation>Medienbibliothek</translation>
     </message>
     <message>
-        <location filename="../blubb/qml/MainPage.qml" line="350"/>
-        <source>Shutdown</source>
-        <translation>Herunterfahren</translation>
-    </message>
-    <message>
-        <location filename="../blubb/qml/MainPage.qml" line="355"/>
-        <source>Reboot</source>
-        <translation>Neu starten</translation>
-    </message>
-    <message>
-        <location filename="../blubb/qml/MainPage.qml" line="360"/>
-        <source>Suspend</source>
-        <translation>Ruhezustand</translation>
-    </message>
-    <message>
-        <location filename="../blubb/qml/MainPage.qml" line="365"/>
-        <source>Hibernate</source>
-        <translation>Tiefschlaf</translation>
+        <location filename="../apps/ubuntu/qml/MainPage.qml" line="337"/>
+        <source>Options</source>
+        <translation>Optionen</translation>
     </message>
 </context>
 <context>
@@ -862,17 +1080,25 @@
     <message>
         <location filename="../apps/generic/ui/mainwindow.cpp" line="283"/>
         <source>Download started: %1</source>
-        <translation>Herunterladen gestsrted: %1</translation>
+        <translation>Download begonnen: %1</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/mainwindow.cpp" line="296"/>
         <source>Download finished: %1</source>
-        <translation>Herunterladen fertig: %1</translation>
+        <translation>Download beendet: %1</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/mainwindow.cpp" line="298"/>
         <source>Error downloading %1</source>
         <translation>Fehler beim Laden von %1</translation>
+    </message>
+</context>
+<context>
+    <name>MediaSelectionDialog</name>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/MediaSelectionDialog.qml" line="36"/>
+        <source>None</source>
+        <translation>Aus</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1142,7 @@
     <message>
         <location filename="../apps/harmattan/nfchandler.cpp" line="152"/>
         <source>Tag written successfully. NOTE: This tag does not offer enough space to write all informations. Wake on LAN will not work with this tag.</source>
-        <translation>Tag erfolgreich beschrieben. ACHTUNG: Dieses Tag bietet nicht genug speicherplatz für alle Informationen. Wake on LAN wird damit nicht funktionieren.</translation>
+        <translation>Tag erfolgreich beschrieben. ACHTUNG: Dieses Tag bietet nicht genug Speicherplatz für alle Informationen. Wake on LAN wird nicht funktionieren.</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/nfchandler.cpp" line="154"/>
@@ -924,9 +1150,32 @@
         <translation>Tag erfolgreich beschrieben.</translation>
     </message>
     <message>
-        <location filename="../apps/harmattan/nfchandler.cpp" line="162"/>
+        <location filename="../apps/harmattan/nfchandler.cpp" line="164"/>
         <source>Error writing NFC tag.</source>
         <translation>Fehler beim Schreiben des NFC Tags.</translation>
+    </message>
+</context>
+<context>
+    <name>NoConnection</name>
+    <message>
+        <location filename="../apps/sailfish/qml/components/NoConnection.qml" line="67"/>
+        <source>Please enable the following options in the Services settings of XBMC:</source>
+        <translation>Bitte aktivieren Sie folgende Optionen in den Dienst-Einstellungen in XBMC:</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/components/NoConnection.qml" line="68"/>
+        <source>Allow control of XBMC via HTTP</source>
+        <translation>Steuerung über Webinterface zulassen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/components/NoConnection.qml" line="69"/>
+        <source>Allow programs on other systems to control XBMC</source>
+        <translation>Stuerung über entfernte Programme zulassen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/components/NoConnection.qml" line="74"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
     </message>
 </context>
 <context>
@@ -952,7 +1201,7 @@
     <message>
         <location filename="../apps/plasmoid/qml/NowPlaying.qml" line="85"/>
         <source>Episode:</source>
-        <translation>Folge:</translation>
+        <translation>Episode:</translation>
     </message>
     <message>
         <location filename="../apps/plasmoid/qml/NowPlaying.qml" line="85"/>
@@ -979,86 +1228,103 @@
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="129"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="31"/>
         <source>First aired:</source>
         <translation>Erstausstrahlung:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="135"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="36"/>
         <source>Genre:</source>
         <translation>Genre:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="141"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="41"/>
         <source>Year:</source>
         <translation>Jahr:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="147"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="46"/>
         <source>Director:</source>
-        <translation>Direktor:</translation>
+        <translation>Regisseur:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="153"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="51"/>
         <source>Tagline:</source>
-        <translation>Kurzbeschreibung:</translation>
+        <translation>Titelzeile:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="159"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="56"/>
         <source>MPAA:</source>
         <translation>Altersfreigabe:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="165"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="61"/>
         <source>Instrument:</source>
         <translation>Instrument:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="171"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="66"/>
         <source>Style:</source>
         <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="177"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="71"/>
         <source>Mood:</source>
         <translation>Stimmung:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="183"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="76"/>
         <source>Born:</source>
         <translation>Geboren:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="189"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="81"/>
         <source>Formed:</source>
-        <translation>Gegründet:</translation>
+        <translation>Formiert:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="195"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="86"/>
         <source>Died:</source>
         <translation>Gestorben:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="201"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="91"/>
         <source>Disbanded:</source>
-        <translation>Getrennt:</translation>
+        <translation>Aufgelöst:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="207"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="96"/>
         <source>Duration:</source>
         <translation>Dauer:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="213"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="101"/>
         <source>Comment:</source>
         <translation>Kommentar:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="219"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="106"/>
         <source>Playcount:</source>
         <translation>Zähler:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingDetails.qml" line="225"/>
+        <location filename="../apps/sailfish/qml/components/NowPlayingDetails.qml" line="111"/>
         <source>Cast:</source>
         <translation>Besetzung:</translation>
     </message>
@@ -1067,6 +1333,7 @@
     <name>NowPlayingPage</name>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="77"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="468"/>
         <source>Select audio track</source>
         <translation>Tonspur wählen</translation>
     </message>
@@ -1077,34 +1344,33 @@
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="140"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="457"/>
         <source>Select subtitle</source>
         <translation>Untertitel wählen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="298"/>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="248"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="244"/>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="192"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="215"/>
         <source>Season:</source>
-        <translation>Staffel</translation>
+        <translation>Staffel:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="298"/>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="248"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="244"/>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="198"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="215"/>
         <source>Episode:</source>
         <translation>Folge:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="304"/>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="248"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="244"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="215"/>
         <source>Rating:</source>
         <translation>Bewertung:</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/NowPlayingPage.qml" line="330"/>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="237"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="233"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="204"/>
         <source>Year:</source>
         <translation>Jahr:</translation>
     </message>
@@ -1119,81 +1385,124 @@
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="46"/>
-        <source>Repeat</source>
-        <translation>Wiederholen</translation>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="62"/>
+        <source>Media</source>
+        <translation>Medien</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="50"/>
-        <source>shuffle</source>
-        <translation>Zufall</translation>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="69"/>
+        <source>Keypad</source>
+        <translation>Tastenfeld</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="56"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="52"/>
-        <source>Subtitle</source>
-        <translation>Untertitel</translation>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="76"/>
+        <source>Now playing</source>
+        <translation>Jetzt gespielt</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="66"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="62"/>
-        <source>Audio track</source>
-        <translation>Tonspur</translation>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="83"/>
+        <source>Pause</source>
+        <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="108"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="104"/>
-        <source>No active playback. Please select some content from the media tab.</source>
-        <translation>Keine wiedergabe. Bitte starten Sie eine Wiedergabe.</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="413"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="409"/>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="83"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="397"/>
         <source>Play</source>
-        <translation>Abspielen</translation>
+        <translation>Wiedergabe</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="420"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="416"/>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="88"/>
+        <source>Next</source>
+        <translation>Nächstes</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="93"/>
+        <source>Previous</source>
+        <translation>Vorheriges</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/NowPlayingPage.qml" line="98"/>
+        <source>Stop</source>
+        <translation>Stopp</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="31"/>
+        <source>Now Playing</source>
+        <translation>Jetzt gespielt</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="74"/>
+        <source>No active playback. Please select some content from the media tab.</source>
+        <translation>Keine aktive Wiedergabe. Bitte wählen Sie einen Inhalt aus den Medien.</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="371"/>
+        <source>None</source>
+        <translation>Aus</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="404"/>
         <source>Remove from playlist</source>
         <translation>Aus Wiedergabeliste entfernen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="427"/>
-        <location filename="../blubb/qml/NowPlayingPage.qml" line="423"/>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="411"/>
         <source>Clear playlist</source>
-        <translation>Wiedergabeliste leeren</translation>
+        <translation>Wiedergabeliste löschen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="425"/>
+        <source>Repeat</source>
+        <translation>Wiederholen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="443"/>
+        <source>Shuffle</source>
+        <translation>Zufall</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="452"/>
+        <source>Subtitles</source>
+        <translation>Untertitel</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/NowPlayingPage.qml" line="463"/>
+        <source>Audio track</source>
+        <translation>Tonspur</translation>
     </message>
 </context>
 <context>
     <name>NowPlayingView</name>
     <message>
-        <location filename="../apps/generic/qml/NowPlayingView.qml" line="214"/>
+        <location filename="../apps/generic/qml/NowPlayingView.qml" line="218"/>
         <source>Now playing:</source>
         <translation>Jetzt gespielt:</translation>
     </message>
     <message>
-        <location filename="../apps/generic/qml/NowPlayingView.qml" line="224"/>
+        <location filename="../apps/generic/qml/NowPlayingView.qml" line="228"/>
         <source>Track:</source>
-        <translation>Titel:</translation>
+        <translation>Nummer:</translation>
     </message>
 </context>
 <context>
     <name>PlaylistPage</name>
     <message>
         <location filename="../apps/harmattan/qml/PlaylistPage.qml" line="157"/>
+        <location filename="../apps/sailfish/qml/pages/PlaylistPage.qml" line="59"/>
         <source>Play</source>
         <translation>Abspielen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/PlaylistPage.qml" line="163"/>
+        <location filename="../apps/sailfish/qml/pages/PlaylistPage.qml" line="65"/>
         <source>Remove from playlist</source>
         <translation>Aus Wiedergabeliste entfernen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/PlaylistPage.qml" line="169"/>
+        <location filename="../apps/sailfish/qml/pages/PlaylistPage.qml" line="71"/>
         <source>Clear playlist</source>
-        <translation>Wiedergabeliste leeren</translation>
+        <translation>Wiedergabeliste löschen</translation>
     </message>
 </context>
 <context>
@@ -1201,12 +1510,55 @@
     <message>
         <location filename="../apps/plasmoid/qml/PopupDialog.qml" line="61"/>
         <source>Xbmc on %1</source>
-        <translation>XBMC auf %1</translation>
+        <translation>Xbmc auf %1</translation>
     </message>
     <message>
         <location filename="../apps/plasmoid/qml/PopupDialog.qml" line="80"/>
         <source>Connect to...</source>
-        <translation>Verbinde zu...</translation>
+        <translation>Verbinden nach...</translation>
+    </message>
+</context>
+<context>
+    <name>PowerMenu</name>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="7"/>
+        <source>Power menu</source>
+        <translation>Ein/Aus Menü</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="14"/>
+        <source>Disconnect</source>
+        <translation>Trennen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="23"/>
+        <source>Quit XBMC</source>
+        <translation>XBMC beenden</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="32"/>
+        <source>Shutdown XBMC host</source>
+        <translation>XBMC herunterfahren</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="42"/>
+        <source>Reboot XBMC host</source>
+        <translation>XBMC neu starten</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="52"/>
+        <source>Suspend XBMC host</source>
+        <translation>XBMC in Energiesparmodus</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="62"/>
+        <source>Hibernate XBMC host</source>
+        <translation>XBMC in Tiefschlaf</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/PowerMenu.qml" line="72"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1234,12 +1586,20 @@
     <message>
         <location filename="../libxbmcremote/recentitems.cpp" line="61"/>
         <source>Music Videos</source>
-        <translation>Musik Videos</translation>
+        <translation>Musikvideos</translation>
     </message>
     <message>
         <location filename="../libxbmcremote/recentitems.cpp" line="104"/>
         <source>Recently added</source>
         <translation>Kürzlich hinzugefügt</translation>
+    </message>
+</context>
+<context>
+    <name>SailfishHelper</name>
+    <message>
+        <location filename="../apps/sailfish/src/sailfishhelper.cpp" line="92"/>
+        <source>Incoming call</source>
+        <translation>Eingehender Anruf</translation>
     </message>
 </context>
 <context>
@@ -1253,39 +1613,97 @@
 <context>
     <name>SettingsDialog</name>
     <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="45"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="49"/>
+        <source>Look and feel</source>
+        <translation>Aussehen</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="54"/>
+        <location filename="../apps/generic/ui/settingsdialog.cpp" line="71"/>
+        <source>Use Thumbnails</source>
+        <translation>Benutze Vorschaubilder</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="64"/>
+        <location filename="../apps/generic/ui/settingsdialog.cpp" line="75"/>
+        <source>Ignore articles for sorting</source>
+        <translation>Artikel für Sortierung ignorieren</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="69"/>
+        <source>Used media</source>
+        <translation>Benutzte Medien</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="76"/>
+        <source>Music</source>
+        <translation>Musik</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="82"/>
+        <source>Videos</source>
+        <translation>Videos</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="92"/>
+        <source>Pictures</source>
+        <translation>Bilder</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="98"/>
+        <source>TV Channels</source>
+        <translation>Fernsehsender</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="105"/>
+        <source>Phone calls</source>
+        <translation>Telefongespräche</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="110"/>
+        <source>Change volume</source>
+        <translation>Lautstärke ändern</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="125"/>
+        <source>Pause video</source>
+        <translation>Video pausieren</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="130"/>
+        <source>Pause music</source>
+        <translation>Musik pausieren</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/SettingsDialog.qml" line="135"/>
+        <location filename="../apps/generic/ui/settingsdialog.cpp" line="98"/>
+        <source>Show call notifications</source>
+        <translation>Anrufbenachrichtigungen anzeigen</translation>
+    </message>
+    <message>
         <location filename="../apps/generic/ui/settingsdialog.cpp" line="40"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../apps/generic/ui/settingsdialog.cpp" line="67"/>
-        <source>Use Thumbnails</source>
-        <translation>Benutze Vorschaubilder</translation>
-    </message>
-    <message>
-        <location filename="../apps/generic/ui/settingsdialog.cpp" line="71"/>
-        <source>Ignore articles for sorting</source>
-        <translation>Artikel für Sortierung ignorieren</translation>
-    </message>
-    <message>
-        <location filename="../apps/generic/ui/settingsdialog.cpp" line="75"/>
+        <location filename="../apps/generic/ui/settingsdialog.cpp" line="79"/>
         <source>Change volume during calls</source>
-        <translation>Ändere Lautstärke währen Telefongesprächen</translation>
-    </message>
-    <message>
-        <location filename="../apps/generic/ui/settingsdialog.cpp" line="84"/>
-        <source>Pause video during calls</source>
-        <translation>Pausiere Video währen Telefongesprächen</translation>
+        <translation>Ändere Lautstärke bei Anruf</translation>
     </message>
     <message>
         <location filename="../apps/generic/ui/settingsdialog.cpp" line="88"/>
-        <source>Pause music during calls</source>
-        <translation>Pausiere Musik währen Telefongesprächen</translation>
+        <source>Pause video during calls</source>
+        <translation>Pausiere Video bei Anruf</translation>
     </message>
     <message>
-        <location filename="../apps/generic/ui/settingsdialog.cpp" line="94"/>
-        <source>Show call notifications</source>
-        <translation>Anrufbenachrichtigung anzeigen</translation>
+        <location filename="../apps/generic/ui/settingsdialog.cpp" line="92"/>
+        <source>Pause music during calls</source>
+        <translation>Pausiere Musik bei Anruf</translation>
     </message>
 </context>
 <context>
@@ -1302,10 +1720,9 @@
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="40"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="26"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="26"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="18"/>
         <source>Look and feel</source>
-        <translation>Aussehen</translation>
+        <translation>Erscheinungsbild</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="46"/>
@@ -1315,47 +1732,41 @@
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="51"/>
         <source>Use Thumbnails</source>
-        <translation>Benutze Vorschaubilder</translation>
+        <translation>Vorschaubilder benutzen</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="56"/>
         <source>Keep display on when charging</source>
-        <translation>Bildschirm an beim Laden</translation>
+        <translation>Bildschirm an bei Laden</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="61"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="47"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="47"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="40"/>
         <source>Ignore articles for sorting</source>
         <translation>Artikel für Sortierung ignorieren</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="69"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="70"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="70"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="65"/>
         <source>Music</source>
         <translation>Musik</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="75"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="80"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="80"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="76"/>
         <source>Videos</source>
         <translation>Videos</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="85"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="90"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="90"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="87"/>
         <source>Pictures</source>
         <translation>Bilder</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="91"/>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="100"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="100"/>
         <source>TV Channels</source>
-        <translation>Fernsehkanäle</translation>
+        <translation>TV Kanäle</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="98"/>
@@ -1365,28 +1776,42 @@
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="104"/>
         <source>Change volume</source>
-        <translation>Lautstärke ändern</translation>
+        <translation>Ändere Lautstärke</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="117"/>
         <source>Pause video</source>
-        <translation>Video pausieren</translation>
+        <translation>Pausiere Videos</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="122"/>
         <source>Pause music</source>
-        <translation>Musik pausieren</translation>
+        <translation>Pausiere Musik</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/SettingsSheet.qml" line="127"/>
         <source>Show call notifications</source>
-        <translation>Anrufbenachrichtigung anzeigen</translation>
+        <translation>Anrufbenachrichtigungen anzeigen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="54"/>
-        <location filename="../blubb/qml/SettingsSheet.qml" line="54"/>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="9"/>
+        <source>Media browser settings</source>
+        <translation>Einstellungen für Medienbrowser</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="48"/>
         <source>Used media</source>
-        <translation>Angezeigen</translation>
+        <translation>Benutzte Medien</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="98"/>
+        <source>TV</source>
+        <translation>TV</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/SettingsSheet.qml" line="151"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -1428,59 +1853,6 @@
         <location filename="../libxbmcremote/songs.cpp" line="226"/>
         <source>Songs</source>
         <translation>Lieder</translation>
-    </message>
-</context>
-<context>
-    <name>SystemMenu</name>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="29"/>
-        <source>More</source>
-        <translation>Mehr</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="42"/>
-        <source>About</source>
-        <translation>Über</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="56"/>
-        <source>Disconnect</source>
-        <translation>Trennen</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="68"/>
-        <source>Power</source>
-        <translation>System</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="93"/>
-        <source>Quit</source>
-        <translation>Beenden</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="105"/>
-        <source>Shutdown</source>
-        <translation>Herunterfahren</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="118"/>
-        <source>Reboot</source>
-        <translation>Neu starten</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="131"/>
-        <source>Suspend</source>
-        <translation>Ruhezustand</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="144"/>
-        <source>Hibernate</source>
-        <translation>Tiefschlaf</translation>
-    </message>
-    <message>
-        <location filename="../apps/ubuntu/qml/components/ToolbarButtons/SystemMenu.qml" line="221"/>
-        <source>Close</source>
-        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -1542,7 +1914,7 @@
     <message>
         <location filename="../libxbmcremote/videoplaylist.cpp" line="166"/>
         <source>Now Playing</source>
-        <translation>Jetzt gespielt</translation>
+        <translation>Spielt</translation>
     </message>
     <message>
         <location filename="../libxbmcremote/videoplaylist.cpp" line="166"/>
@@ -1555,7 +1927,7 @@
     <message>
         <location filename="../apps/harmattan/qml/WriteNfcTagSheet.qml" line="46"/>
         <source>Tap a NFC tag to write XBMC connection information to it. You can then use the tag to connect to this XBMC.</source>
-        <translation>Berühren Sie ein NFC Tag um es zu beschreiben. Sie können danach durch berühren des Tags eine Verbindung herstellen.</translation>
+        <translation>Berühren Sie ein NFC Tag um Verbindungsinformationen darauf zu speichern. Danach können Sie es zum Verbinden benutzen.</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/WriteNfcTagSheet.qml" line="58"/>
@@ -1576,12 +1948,12 @@
 <context>
     <name>Xbmc</name>
     <message>
-        <location filename="../libxbmcremote/xbmc.cpp" line="227"/>
+        <location filename="../libxbmcremote/xbmc.cpp" line="236"/>
         <source>Finished downloading %1</source>
-        <translation>Laden von %1 beendet</translation>
+        <translation>Download von %1 beendet</translation>
     </message>
     <message>
-        <location filename="../libxbmcremote/xbmc.cpp" line="229"/>
+        <location filename="../libxbmcremote/xbmc.cpp" line="238"/>
         <source>Error downloading %1</source>
         <translation>Fehler beim Laden von %1</translation>
     </message>
@@ -1589,30 +1961,78 @@
 <context>
     <name>XbmcConnection::XbmcConnectionPrivate</name>
     <message>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="212"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="215"/>
         <source>Connecting to %1...</source>
         <translation>Verbinde zu %1...</translation>
     </message>
     <message>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="266"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="269"/>
         <source>The connection has been disconnected</source>
         <translation>Die Verbindung wurde unterbrochen</translation>
     </message>
     <message>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="276"/>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="335"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="279"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="338"/>
         <source>Connection failed: %1</source>
         <translation>Verbindung fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="387"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="390"/>
         <source>This version of Xbmcremote is designed to work with XBMC Frodo (v12.0). It seems you have connected to an older version of XMBC. Please upgrade XBMC in order to use Xbmcremote.</source>
         <translation>Diese Version von Xbmcremote funktioniert nur mit XBMC Frodo (v12.0). Sie haben sich mit einer älteren Version von Xbmc verbunden. Um Xbmcremote zu verwenden müssen Sie ihr Xbmc aktualisieren.</translation>
     </message>
     <message>
-        <location filename="../libxbmcremote/xbmcconnection.cpp" line="606"/>
+        <location filename="../libxbmcremote/xbmcconnection.cpp" line="610"/>
         <source>Connection to %1 timed out...</source>
         <translation>Zeitüberschreitung bei Verbindung zu %1...</translation>
+    </message>
+</context>
+<context>
+    <name>XbmcPage</name>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="32"/>
+        <source>XBMC on %1</source>
+        <translation>XBMC auf %1</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="99"/>
+        <source>Quit</source>
+        <translation>Beenden</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="102"/>
+        <source>Shutdown</source>
+        <translation>Herunterfahren</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="105"/>
+        <source>Reboot</source>
+        <translation>Neu starten</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="108"/>
+        <source>Suspend</source>
+        <translation>Ruhezustand</translation>
+    </message>
+    <message>
+        <location filename="../apps/sailfish/qml/pages/XbmcPage.qml" line="111"/>
+        <source>Hibernate</source>
+        <translation>Tiefschlaf</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/XbmcPage.qml" line="21"/>
+        <source>Media</source>
+        <translation>Medien</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/XbmcPage.qml" line="32"/>
+        <source>Now Playing</source>
+        <translation>Jetzt gespielt</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/components/XbmcPage.qml" line="43"/>
+        <source>Keypad</source>
+        <translation>Tastenfeld</translation>
     </message>
 </context>
 <context>
@@ -1646,9 +2066,8 @@
         <location filename="../apps/harmattan/qml/main.qml" line="210"/>
         <location filename="../apps/harmattan/qml/main.qml" line="231"/>
         <location filename="../apps/harmattan/qml/main.qml" line="253"/>
-        <location filename="../apps/ubuntu/qml/main.qml" line="325"/>
-        <location filename="../apps/ubuntu/qml/main.qml" line="448"/>
-        <location filename="../blubb/qml/main.qml" line="282"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="445"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="573"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1657,11 +2076,9 @@
         <location filename="../apps/harmattan/qml/main.qml" line="232"/>
         <location filename="../apps/harmattan/qml/main.qml" line="254"/>
         <location filename="../apps/harmattan/qml/main.qml" line="359"/>
-        <location filename="../apps/ubuntu/qml/main.qml" line="195"/>
-        <location filename="../apps/ubuntu/qml/main.qml" line="320"/>
-        <location filename="../apps/ubuntu/qml/main.qml" line="443"/>
-        <location filename="../blubb/qml/main.qml" line="152"/>
-        <location filename="../blubb/qml/main.qml" line="277"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="211"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="437"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="568"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -1678,7 +2095,7 @@
     <message>
         <location filename="../apps/harmattan/qml/main.qml" line="342"/>
         <source>Reboot</source>
-        <translation>Neu starten</translation>
+        <translation>Neustart</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/main.qml" line="347"/>
@@ -1688,7 +2105,7 @@
     <message>
         <location filename="../apps/harmattan/qml/main.qml" line="352"/>
         <source>Hibernate</source>
-        <translation>Tiefschlaf</translation>
+        <translation>Ruhezustand</translation>
     </message>
     <message>
         <location filename="../apps/harmattan/qml/main.qml" line="398"/>
@@ -1711,110 +2128,132 @@
         <translation>Flattr</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="156"/>
-        <location filename="../blubb/qml/main.qml" line="113"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="108"/>
+        <source>Connecting...</source>
+        <translation>Verbinde...</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="108"/>
+        <source>Select Host</source>
+        <translation>Verbindung auswählen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="164"/>
         <source>Searching for XBMC hosts.</source>
         <translation>Suche XBMC.</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="157"/>
-        <location filename="../blubb/qml/main.qml" line="114"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="165"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="205"/>
         <source>Please enable the following options in the Services settings of XBMC:</source>
         <translation>Bitte aktivieren Sie folgende Optionen in den Dienst-Einstellungen in XBMC:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="158"/>
-        <location filename="../blubb/qml/main.qml" line="115"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="166"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="206"/>
         <source>Allow control of XBMC via HTTP</source>
         <translation>Steuerung über Webinterface zulassen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="159"/>
-        <location filename="../blubb/qml/main.qml" line="116"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="167"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="207"/>
         <source>Allow programs on other systems to control XBMC</source>
         <translation>Stuerung über entfernte Programme zulassen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="160"/>
-        <location filename="../blubb/qml/main.qml" line="117"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="168"/>
         <source>Announce these services to other systems via Zeroconf</source>
         <translation>Zeroconf-Veröffentlichung</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="161"/>
-        <location filename="../blubb/qml/main.qml" line="118"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="169"/>
         <source>If you don&apos;t use Zeroconf, add a host manually.</source>
         <translation>Wenn Sie Zeroconf nicht benutzen, fügen Sie den Ihr XBMC manuell hinzu.</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="229"/>
-        <location filename="../blubb/qml/main.qml" line="186"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="260"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="234"/>
-        <location filename="../blubb/qml/main.qml" line="191"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="265"/>
         <source>Wake up</source>
         <translation>Aufwecken</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="246"/>
-        <location filename="../blubb/qml/main.qml" line="203"/>
-        <source>Add host</source>
-        <translation>Hinzufügen</translation>
+        <location filename="../apps/ubuntu/qml/main.qml" line="270"/>
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="263"/>
-        <location filename="../blubb/qml/main.qml" line="220"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="282"/>
+        <source>Host settings</source>
+        <translation>Verbindungseinstellungen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="305"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="294"/>
-        <location filename="../blubb/qml/main.qml" line="251"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="339"/>
         <source>Hostname or IP Address:</source>
-        <translation>Rechnername oder IP Adresse:</translation>
+        <translation>Hostname oder IP Adresse:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="301"/>
-        <location filename="../blubb/qml/main.qml" line="258"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="349"/>
         <source>Port:</source>
         <translation>Port:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="309"/>
-        <location filename="../blubb/qml/main.qml" line="266"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="359"/>
         <source>Mac Address:</source>
         <translation>MAC Adresse:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="369"/>
-        <source>Media</source>
-        <translation>Medien</translation>
+        <location filename="../apps/ubuntu/qml/main.qml" line="371"/>
+        <source>Volume</source>
+        <translation>Lautstärke</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="383"/>
-        <source>Now playing</source>
-        <translation>Jetzt gespielt</translation>
+        <location filename="../apps/ubuntu/qml/main.qml" line="377"/>
+        <source>Custom Stepping</source>
+        <translation>Absolut</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="390"/>
-        <source>Keypad</source>
-        <translation>Fernbedienung</translation>
+        <location filename="../apps/ubuntu/qml/main.qml" line="377"/>
+        <source>Up or down</source>
+        <translation>Lauter/Leiser</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="421"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="377"/>
+        <source>Custom script</source>
+        <translation>Skript</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="405"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="413"/>
+        <source>Up command</source>
+        <translation>Script zum Erhöhen</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="418"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="426"/>
+        <source>Down command</source>
+        <translation>Script zum Senken</translation>
+    </message>
+    <message>
+        <location filename="../apps/ubuntu/qml/main.qml" line="546"/>
         <source>XBMC on %1 requires authentication:</source>
         <translation>XBMC auf %1 verlangt authentifizierung:</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="425"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="550"/>
         <source>Username</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../apps/ubuntu/qml/main.qml" line="432"/>
+        <location filename="../apps/ubuntu/qml/main.qml" line="557"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>

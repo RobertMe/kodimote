@@ -1,6 +1,5 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
- *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
  * This file is part of Xbmcremote                                           *
  *                                                                           *
@@ -20,44 +19,31 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import Sailfish.Silica 1.0
+import Ubuntu.Components 1.0
 
-Dialog {
-    canAccept: false
+AbstractButton {
+    id: root
+    height: text.length > 0 ? units.gu(6) : units.gu(4)
+    implicitWidth: Math.max(image.width, label.width)
 
-    Column {
-        anchors.centerIn: parent
+    property string source
+    property bool enabled: true
+    property bool selected: false
+    property alias text: label.text
 
-        Column {
-            spacing: 10
-            Button {
-                text: qsTr("Quit")
-                onClicked: xbmc.quit();
-            }
+    XIcon {
+        id: image
+        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top }
+        width: units.gu(4)
+        height: width
+        name: root.source
+        color: "black"
+    }
 
-            Button {
-                text: qsTr("Shutdown")
-                visible: xbmc.canShutdown
-                onClicked: xbmc.shutdown();
-            }
-
-            Button {
-                text: qsTr("Reboot")
-                visible: xbmc.canReboot
-                onClicked: xbmc.reboot();
-            }
-
-            Button {
-                text: qsTr("Suspend")
-                visible: xbmc.canSuspend
-                onClicked: xbmc.suspend();
-            }
-
-            Button {
-                text: qsTr("Hibernate")
-                visible: xbmc.canHibernate
-                onClicked: xbmc.hibernate();
-            }
-        }
+    Label {
+        id: label
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
+        fontSize: "x-small"
+        color: "black"
     }
 }
