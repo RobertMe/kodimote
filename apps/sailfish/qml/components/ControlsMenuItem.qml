@@ -1,5 +1,6 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
+ *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
  * This file is part of Xbmcremote                                           *
  *                                                                           *
@@ -18,44 +19,13 @@
  *                                                                           *
  ****************************************************************************/
 
-#ifndef CHANNELS_H
-#define CHANNELS_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include "xbmclibrary.h"
-
-class Channels : public XbmcLibrary
-{
-    Q_OBJECT
-public:
-    explicit Channels(int channelgroupid, XbmcModel *parent = 0);
-    
-    QString title() const;
-    void refresh();
-    XbmcModel* enterItem(int index);
-    void playItem(int index);
-    void addToPlaylist(int index);
-
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-
-    ThumbnailFormat thumbnailFormat() const { return ThumbnailFormat43; }
-    Q_INVOKABLE void fetchItemDetails(int index);
-    Q_INVOKABLE bool hasDetails() { return true; }
-
-signals:
-    
-private slots:
-    void listReceived(const QVariantMap &rsp);
-    void detailsReceived(const QVariantMap &rsp);
-
-    void fetchBroadcasts(int channelId, int start = 0, int end = 20);
-    void broadcastsReceived(const QVariantMap &rsp);
-
-private:
-    int m_channelgroupid;
-
-    QMap<int, int> m_detailsRequestMap;
-    QMap<int, int> m_broadcastRequestMap;
-};
-
-#endif // CHANNELS_H
+MenuItem {
+    visible: xbmc.activePlayer
+    text: dockedControls.open ? qsTr("Hide controls") : qsTr("Show controls")
+    onClicked: {
+        dockedControls.open = !dockedControls.open
+    }
+}

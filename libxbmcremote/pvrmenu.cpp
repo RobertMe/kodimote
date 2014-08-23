@@ -18,44 +18,57 @@
  *                                                                           *
  ****************************************************************************/
 
-#ifndef CHANNELS_H
-#define CHANNELS_H
+#include "pvrmenu.h"
 
-#include "xbmclibrary.h"
+#include "libraryitem.h"
 
-class Channels : public XbmcLibrary
+#include "channelgroups.h"
+#include "recordings.h"
+
+PvrMenu::PvrMenu(XbmcModel *parent) :
+    XbmcLibrary(parent)
 {
-    Q_OBJECT
-public:
-    explicit Channels(int channelgroupid, XbmcModel *parent = 0);
-    
-    QString title() const;
-    void refresh();
-    XbmcModel* enterItem(int index);
-    void playItem(int index);
-    void addToPlaylist(int index);
+    setBusy(false);
+    LibraryItem *item = new LibraryItem(tr("TV Channels"), QString(), this);
+    item->setFileType("directory");
+    item->setPlayable(false);
+    m_list.append(item);
 
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
+    item = new LibraryItem(tr("Recordings"), QString(), this);
+    item->setFileType("directory");
+    item->setPlayable(false);
+    m_list.append(item);
+}
 
-    ThumbnailFormat thumbnailFormat() const { return ThumbnailFormat43; }
-    Q_INVOKABLE void fetchItemDetails(int index);
-    Q_INVOKABLE bool hasDetails() { return true; }
+QString PvrMenu::title() const
+{
+    return tr("Live TV");
+}
 
-signals:
-    
-private slots:
-    void listReceived(const QVariantMap &rsp);
-    void detailsReceived(const QVariantMap &rsp);
+XbmcModel *PvrMenu::enterItem(int index)
+{
+    switch (index) {
+    case 0:
+        return new ChannelGroups(this);
+    case 1:
+        return new Recordings("", false, this);
+    }
 
-    void fetchBroadcasts(int channelId, int start = 0, int end = 20);
-    void broadcastsReceived(const QVariantMap &rsp);
+    return 0;
+}
 
-private:
-    int m_channelgroupid;
+void PvrMenu::playItem(int index)
+{
+    Q_UNUSED(index)
+    qDebug() << "cannot play PVR Menu";
+}
 
-    QMap<int, int> m_detailsRequestMap;
-    QMap<int, int> m_broadcastRequestMap;
-};
+void PvrMenu::addToPlaylist(int index)
+{
+    Q_UNUSED(index);
+}
 
-#endif // CHANNELS_H
+void PvrMenu::refresh()
+{
+
+}

@@ -18,44 +18,27 @@
  *                                                                           *
  ****************************************************************************/
 
-#ifndef CHANNELS_H
-#define CHANNELS_H
+#ifndef PVRMENU_H
+#define PVRMENU_H
 
 #include "xbmclibrary.h"
 
-class Channels : public XbmcLibrary
+class PvrMenu : public XbmcLibrary
 {
     Q_OBJECT
 public:
-    explicit Channels(int channelgroupid, XbmcModel *parent = 0);
+    explicit PvrMenu(XbmcModel *parent = 0);
     
     QString title() const;
-    void refresh();
     XbmcModel* enterItem(int index);
     void playItem(int index);
     void addToPlaylist(int index);
 
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
+    ThumbnailFormat thumbnailFormat() const { return ThumbnailFormatNone; }
 
-    ThumbnailFormat thumbnailFormat() const { return ThumbnailFormat43; }
-    Q_INVOKABLE void fetchItemDetails(int index);
-    Q_INVOKABLE bool hasDetails() { return true; }
+public slots:
+    void refresh();
 
-signals:
-    
-private slots:
-    void listReceived(const QVariantMap &rsp);
-    void detailsReceived(const QVariantMap &rsp);
-
-    void fetchBroadcasts(int channelId, int start = 0, int end = 20);
-    void broadcastsReceived(const QVariantMap &rsp);
-
-private:
-    int m_channelgroupid;
-
-    QMap<int, int> m_detailsRequestMap;
-    QMap<int, int> m_broadcastRequestMap;
 };
 
-#endif // CHANNELS_H
+#endif

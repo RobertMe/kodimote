@@ -1,6 +1,5 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
- *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
  * This file is part of Xbmcremote                                           *
  *                                                                           *
@@ -19,35 +18,40 @@
  *                                                                           *
  ****************************************************************************/
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
+#ifndef RECORDINGS_H
+#define RECORDINGS_H
 
-Row {
-    id: playerControls
+#include "xbmclibrary.h"
 
-    property QtObject player: xbmc.activePlayer
-    property QtObject currentItem: player ? player.currentItem : null
+class Recordings: public XbmcLibrary
+{
+    Q_OBJECT
+public:
+    explicit Recordings(const QString &path, bool allSubItems = false, XbmcModel *parent = 0);
+    
+    QString title() const;
+    void refresh();
+    XbmcModel* enterItem(int index);
+    void playItem(int index);
+    void addToPlaylist(int index);
 
-    anchors.horizontalCenter: parent.horizontalCenter
-    visible: player
+    virtual QHash<int, QByteArray> roleNames() const;
 
-    IconButton {
-        icon.source: "image://theme/icon-m-previous"
-        onClicked: playerControls.player.skipPrevious()
-    }
+    ThumbnailFormat thumbnailFormat() const { return ThumbnailFormatPortrait; }
+    Q_INVOKABLE void fetchItemDetails(int index);
+    Q_INVOKABLE bool hasDetails() { return true; }
 
-    IconButton {
-        icon.source: "../icons/icon-m-stop.png"
-        onClicked: playerControls.player.stop()
-    }
+signals:
+    
+private slots:
+    void listReceived(const QVariantMap &rsp);
 
-    IconButton {
-        icon.source: "image://theme/icon-m-" + (playerControls.player && playerControls.player.state === "playing" ? "pause" : "play")
-        onClicked: playerControls.player.playPause()
-    }
+private:
 
-    IconButton {
-        icon.source: "image://theme/icon-m-next"
-        onClicked: playerControls.player.skipNext()
-    }
-}
+    static bool recordingLessThan(XbmcModelItem *item1, XbmcModelItem *item2);
+
+    QString m_path;
+    bool m_allSubItems;
+};
+
+#endif // RECORDINGS_H

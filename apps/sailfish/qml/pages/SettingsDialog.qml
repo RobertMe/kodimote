@@ -95,9 +95,10 @@ Dialog {
                 }
                 TextSwitch {
                     id: pvrEnabled
-                    text: qsTr("TV Channels")
+                    text: qsTr("Live TV")
                     checked: settings.pvrEnabled
                     width: parent.width / 2
+                    visible: xbmc.pvrAvailable
                 }
             }
 
@@ -151,5 +152,6 @@ Dialog {
         settings.videosEnabled = videosEnabled.checked
         settings.picturesEnabled = picturesEnabled.checked
         settings.pvrEnabled = pvrEnabled.checked
+        settings.hapticsEnabled = hapticsEnabled.checked
     }
 }

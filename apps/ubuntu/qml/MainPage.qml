@@ -85,7 +85,7 @@ XbmcPage {
                 return qsTr("Pictures");
             }
             if (target === "tv") {
-                return qsTr("TV Channels");
+                return qsTr("Live TV");
             }
             return "";
         }
@@ -102,8 +102,15 @@ XbmcPage {
         if (settings.picturesEnabled) {
             mainMenuModel.append(mainMenuModelTemplate.get(2));
         }
-        if (settings.pvrEnabled) {
+        if (xbmc.pvrAvailable && settings.pvrEnabled) {
             mainMenuModel.append(mainMenuModelTemplate.get(3));
+        }
+    }
+
+    Connections {
+        target: xbmc
+        onPvrAvailableChanged: {
+            populateMainMenu();
         }
     }
 
@@ -194,7 +201,7 @@ XbmcPage {
                     Label {
                         id: subText
                         text: mode === "library" ? qsTr("Library") : qsTr("Files")
-                        visible: text != ""
+                        visible: target == "music" || target == "videos"
                         color: "white"
                     }
                 }
@@ -277,7 +284,7 @@ XbmcPage {
                             console.log("created model: " + newModel);
                             break;
                         case "tv":
-                            newModel = xbmc.channelGroups();
+                            newModel = xbmc.pvrMenu();
                             console.log("created model: " + newModel);
                             break;
                         }

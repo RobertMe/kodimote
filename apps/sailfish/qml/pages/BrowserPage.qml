@@ -50,7 +50,7 @@ Page {
         anchors.fill: parent
 
         PullDownMenu {
-            MenuPlayerControls {
+            ControlsMenuItem {
 
             }
 
@@ -119,6 +119,10 @@ Page {
                     Loader {
                         id: contentLoader
                         anchors.fill: parent
+
+                        onLoaded: {
+                            item.item = browserPage.model.getItem(index);
+                        }
 
                         Connections {
                             target: contentLoader.item
@@ -254,6 +258,7 @@ Page {
                                 elide: Text.ElideRight
                                 visible: text != ""
                             }
+
                             Label {
                                 id: subSubText
                                 text: year
@@ -267,20 +272,41 @@ Page {
                         }
                     }
 
+                    ProgressBar {
+                        minimumValue: 0
+                        maximumValue: 100
+                        value: model.progressPercentage != undefined ? progressPercentage : 0
+                        visible: index >= 0 && browserPage.model.getItem(filterModel.mapToSourceIndex(index)).type === "channel"
+
+                        leftMargin: 10
+                        rightMargin: 10
+                        height: 20
+                        anchors {
+                            left: (thumbnailImage.visible ? thumbnailImage.right : parent.left);
+                            leftMargin: (thumbnailImage.visible ? Theme.paddingSmall : Theme.paddingLarge);
+                            right: parent.right
+                            rightMargin: Theme.paddingLarge
+                            verticalCenter: parent.bottom
+                            verticalCenterOffset: 25
+                        }
+                    }
+
                 }
 
                 states: [
                     State {
                         when: open
-                        PropertyChanges { target: listView; interactive: false;contentY: listView.itemHeight * listView.currentIndex }
+                        PropertyChanges { target: listView; interactive: false; contentY: listView.itemHeight * listView.currentIndex }
                         PropertyChanges { target: flickable; interactive: false }
-                        PropertyChanges { target: contentLoader; source: "../components/ItemDetails.qml" }
-                        PropertyChanges { target: listView; header: null }
+                        PropertyChanges { target: contentLoader; source: browserPage.model.getItem(filterModel.mapToSourceIndex(index)).type == "channel" ? "../components/ChannelDetails.qml" : "../components/ItemDetails.qml" }
+                        PropertyChanges { target: dockedControls; hideTemporary: true }
+                        PropertyChanges { target: controlBar; height: 0 }
                     },
                     State {
                         when: opened
                         PropertyChanges { target: listView; interactive: false }
                         PropertyChanges { target: flickable; interactive: false }
+                        PropertyChanges { target: dockedControls; hideTemporary: true }
                     }
                 ]
             }
@@ -354,6 +380,13 @@ Page {
                         filterModel.sortOrder = filterModel.sortOrder == Qt.AscendingOrder ? Qt.DescendingOrder : Qt.AscendingOrder
                     }
                     anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Behavior on height {
+                NumberAnimation {
+                    easing.type: Easing.OutQuad
+                    duration: 300
                 }
             }
         }

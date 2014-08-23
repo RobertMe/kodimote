@@ -1,5 +1,6 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
+ *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
  * This file is part of Xbmcremote                                           *
  *                                                                           *
@@ -19,8 +20,7 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1
+import Sailfish.Silica 1.0
 
 Item {
     id: itemDetails
@@ -29,56 +29,65 @@ Item {
     signal addToPlaylist
     signal download
 
-    property var item
-
-    Component.onCompleted: print("**************itemHeight: " + height)
+    property QtObject item
 
     ListView {
-        anchors {
-            fill: parent
-            leftMargin: units.gu(1)
-            rightMargin: units.gu(1)
-        }
-        contentWidth: width
-        contentHeight: labelColumn.height
-        flickableDirection: Flickable.VerticalFlick
-        clip: true
-        z: 5
-
-
+        id: epgList
+        anchors.fill: parent
         model: itemDetails.item.channelBroadcasts
-        delegate: Subtitled {
-            text: title
-            subText: Qt.formatDate(startTime) + "  " + Qt.formatTime(startTime) + " - " + Qt.formatTime(endTime)
-            UbuntuShape {
-                id: progressBar
+
+        delegate: ListItem {
+            width: epgList.width
+            contentHeight: model.isActive ? column.height + 20 : column.height
+
+            Column {
                 anchors {
-                    left:parent.left
+                    left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
-                    bottomMargin: units.gu(.5)
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingLarge
                 }
-                color: "#22000000"
+                id: column
+                Label {
+                    width: parent.width
+                    color: Theme.primaryColor
+                    elide: Text.ElideRight
+                    text: title
+                }
 
-                height: units.dp(3)
-                visible: model.isActive
-                property int minimumValue: 0
-                property int maximumValue: 100
-                property int value: progressPercentage
-
-                UbuntuShape {
-                    anchors.fill: parent
-                    anchors.rightMargin: parent.width - (parent.width * parent.value / 100)
-                    color: "#1b62c8"
+                Label {
+                    width: parent.width
+                    color: Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    elide: Text.ElideRight
+                    text: Qt.formatDate(startTime) + "  " + Qt.formatTime(startTime) + " - " + Qt.formatTime(endTime)
                 }
             }
-            UbuntuShape {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                height: units.gu(1)
-                width: height
+
+            Rectangle {
+                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: Theme.paddingSmall }
                 color: "red"
+                height: 15
+                width: height
+                radius: height * 0.5
                 visible: hasTimer
             }
+
+
+            ProgressBar {
+                width: parent.width
+                minimumValue: 0
+                maximumValue: 100
+                value: progressPercentage
+                visible: model.isActive
+
+                leftMargin: Theme.paddingLarge
+                rightMargin: Theme.paddingLarge
+                height: 20
+                anchors { verticalCenter: parent.bottom; verticalCenterOffset: 20 }
+            }
         }
+
+        VerticalScrollDecorator { }
     }
 }

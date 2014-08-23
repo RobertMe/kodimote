@@ -44,7 +44,7 @@ Page {
         }
 
         PullDownMenu {
-            MenuPlayerControls {
+            ControlsMenuItem {
 
             }
 
@@ -89,7 +89,8 @@ Page {
             anchors.top: header.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: Theme.paddingLarge
+            anchors.leftMargin: Theme.paddingLarge
+            anchors.rightMargin: Theme.paddingLarge
 
             spacing: Theme.paddingLarge * 1.5
 
@@ -172,18 +173,6 @@ Page {
                     }
                 }
             }
-
-            Rectangle {
-                width: parent.width
-                color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
-                height: Theme.itemSizeMedium
-
-                PlayerControls {
-                    anchors.centerIn: parent
-                    player: usePictureControls ? keypad.picturePlayer : xbmc.activePlayer
-                }
-            }
-
             Rectangle {
                 width: parent.width
                 color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
