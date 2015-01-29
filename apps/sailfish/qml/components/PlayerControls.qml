@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -21,7 +21,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.xbmcremote 1.0
+import harbour.kodimote 1.0
 
 Row {
     id: playerControls
@@ -34,7 +34,9 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: !!player
-        onClicked: playerControls.player.skipPrevious()
+        onClicked: {
+            playerControls.player.skipPrevious()
+        }
     }
 
     IconButton {
@@ -42,7 +44,9 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: player ? player.state == "playing" && player.type !== Player.PlayerTypePictures : false
-        onClicked: playerControls.player.seekBackward()
+        onClicked: {
+            playerControls.player.seekBackward()
+        }
         highlighted: down || (playerControls.player && playerControls.player.speed < 0)
     }
 
@@ -51,7 +55,9 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: player ? player.state == "playing" : false
-        onClicked: playerControls.player.stop()
+        onClicked: {
+            playerControls.player.stop()
+        }
     }
 
     IconButton {
@@ -59,7 +65,9 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: !!player
-        onClicked: playerControls.player.playPause()
+        onClicked: {
+            playerControls.player.playPause()
+        }
     }
 
     IconButton {
@@ -67,7 +75,9 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: player ? player.state == "playing" && player.type !== Player.PlayerTypePictures : false
-        onClicked: playerControls.player.seekForward()
+        onClicked: {
+            playerControls.player.seekForward()
+        }
         highlighted: down || (playerControls.player && playerControls.player.speed > 1)
     }
 
@@ -76,6 +86,8 @@ Row {
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: !!player
-        onClicked: playerControls.player.skipNext()
+        onClicked: {
+            playerControls.player.skipNext()
+        }
     }
 }

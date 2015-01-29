@@ -1,7 +1,7 @@
 include(../../config.pri)
 include(../../i18n/i18n.pri)
 
-TARGET = harbour-xbmcremote
+TARGET = harbour-kodimote
 
 STORE = "harbour"
 
@@ -25,7 +25,7 @@ HEADERS += \
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
-    harbour-xbmcremote.desktop \
+    harbour-kodimote.desktop \
     qml/main.qml \
     qml/pages/MainPage.qml \
     qml/pages/AddHostDialog.qml \
@@ -46,8 +46,9 @@ OTHER_FILES += \
     qml/pages/MediaSelectionDialog.qml \
     qml/pages/Keypad.qml \
     qml/components/GesturePad.qml \
-    qml/pages/XbmcPage.qml \
+    qml/pages/KodiPage.qml \
     qml/components/ChannelDetails.qml \
     qml/components/DockedControls.qml \
-    qml/components/ControlsMenuItem.qml
+    qml/components/ControlsMenuItem.qml \
+    qml/pages/ProfileSelectionDialog.qml
 

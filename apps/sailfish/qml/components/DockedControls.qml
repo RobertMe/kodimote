@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -20,11 +20,11 @@
  ****************************************************************************/
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.xbmcremote 1.0
+import harbour.kodimote 1.0
 
 DockedPanel {
     id: panel
-    property QtObject player: xbmc.activePlayer
+    property QtObject player: kodi.activePlayer
     property bool hideTemporary: false
     property bool _opened
     property bool _dialogOpen
@@ -55,7 +55,9 @@ DockedPanel {
             if (Qt.inputMethod.visible) {
                 panel.hide(true);
             } else {
-                panel.show(true);
+                if (open && !hideTemporary) {
+                    panel.show(true);
+                }
             }
         }
     }
@@ -103,14 +105,16 @@ DockedPanel {
                 width: height
                 anchors.left: parent.left
                 icon.source: "../icons/icon-m-volume-down.png"
-                onClicked: xbmc.volumeDown()
+                onClicked: {
+                    kodi.volumeDown()
+                }
             }
 
             Slider {
                 id: volumeSlider
                 anchors.left: volumeDownButton.right
                 anchors.right: volumeUpButton.left
-                enabled: xbmc.connectedHost.volumeControlType !== XbmcHost.VolumeControlTypeRelative
+                enabled: kodi.connectedHost.volumeControlType !== KodiHost.VolumeControlTypeRelative
                 visible: enabled
                 leftMargin: Theme.paddingSmall
                 rightMargin: Theme.paddingLarge
@@ -118,14 +122,25 @@ DockedPanel {
                 minimumValue: 0
                 maximumValue: 100
 
-                onValueChanged: {
-                    xbmc.volume = value
+                onDownChanged: {
+                    if (!down) {
+                        kodi.volume = value
+                    }
                 }
 
                 Binding {
                     target: volumeSlider
                     property: "value"
-                    value: xbmc.volume
+                    value: kodi.volume
+                }
+
+                Timer {
+                    interval: 100
+                    running: volumeSlider.down
+                    repeat: true
+                    onTriggered: {
+                        kodi.volume = volumeSlider.value
+                    }
                 }
             }
 
@@ -135,7 +150,9 @@ DockedPanel {
                 width: height
                 anchors.right: parent.right
                 icon.source: "image://theme/icon-m-speaker"
-                onClicked: xbmc.volumeUp()
+                onClicked: {
+                    kodi.volumeUp()
+                }
             }
         }
 
@@ -161,14 +178,14 @@ DockedPanel {
 
             Switch {
                 icon.source: "image://theme/icon-l-shuffle"
-                visible: xbmc.state == "audio"
+                visible: kodi.state == "audio"
                 checked: player && player.shuffle
                 onClicked: player.shuffle = ! player.shuffle
             }
 
             Switch {
                 icon.source: player && player.repeat === Player.RepeatOne ? "../icons/icon-l-repeat-one.png" : "image://theme/icon-l-repeat"
-                visible: xbmc.state == "audio"
+                visible: kodi.state == "audio"
                 checked: player && player.repeat !== Player.RepeatNone
                 automaticCheck: false
                 onClicked: {
@@ -184,7 +201,7 @@ DockedPanel {
 
             Switch {
                 icon.source: "image://theme/icon-l-speaker"
-                visible: xbmc.state == "video"
+                visible: kodi.state == "video"
                 checked: true
                 automaticCheck: false
                 onClicked: {
@@ -205,7 +222,7 @@ DockedPanel {
 
             Switch {
                 icon.source: "image://theme/icon-m-message"
-                visible: xbmc.state == "video"
+                visible: kodi.state == "video"
                 checked: player && player.currentSubtitle >= 0
                 automaticCheck: false
                 onClicked: {

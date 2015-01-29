@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -33,17 +33,16 @@ Dialog {
 
         contentHeight: settingsCol.childrenRect.height
 
+        DialogHeader {
+            id: header
+            acceptText: qsTr("Save")
+            width: parent.width
+        }
+
         Column {
             id: settingsCol
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: Theme.paddingLarge
+            anchors {left: parent.left; right: parent.right; top: header.bottom; leftMargin: Theme.paddingLarge; rightMargin: Theme.paddingLarge }
             spacing: Theme.paddingSmall
-
-            DialogHeader {
-                id: header
-                acceptText: qsTr("Save")
-            }
 
             SectionHeader {
                 text: qsTr("Look and feel")
@@ -98,7 +97,7 @@ Dialog {
                     text: qsTr("Live TV")
                     checked: settings.pvrEnabled
                     width: parent.width / 2
-                    visible: xbmc.pvrAvailable
+                    visible: kodi.pvrAvailable
                 }
             }
 

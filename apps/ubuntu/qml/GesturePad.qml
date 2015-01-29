@@ -1,14 +1,14 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -21,19 +21,35 @@
 import QtQuick 2.0
 import Ubuntu.Components 0.1
 import QtFeedback 5.0
-import Xbmc 1.0
+import Kodi 1.0
 
 Item {
     id: root
 
-    function teaseArrows() {
-        teaseTimer.start()
-    }
     Timer {
         id: teaseTimer
         interval: 1000
+        running: settings.introStep < Settings.IntroStepDone
+        repeat: true
         onTriggered: {
-            animateAll();
+            switch (settings.introStep) {
+            case Settings.IntroStepLeftRight:
+                leftArrows.item.animate()
+                rightArrows.item.animate();
+                break;
+            case Settings.IntroStepUpDown:
+                upArrows.item.animate()
+                downArrows.item.animate();
+                break;
+            case Settings.IntroStepScroll:
+                downArrows.item.animate();
+                break;
+            case Settings.IntroStepColors:
+            case Settings.IntroStepClick:
+            case Settings.IntroStepExit:
+                animateAll();
+                break;
+            }
         }
     }
 
@@ -46,11 +62,8 @@ Item {
 
     HapticsEffect {
         id: rumbleEffect
-        attackIntensity: 0
-        attackTime: 0
-        intensity: 0.1
-        fadeTime: 0
-        fadeIntensity: 0
+        intensity: 0.05
+        duration: 50
     }
 
     Component {
@@ -215,11 +228,23 @@ Item {
             // Lets use newSpeed for changing and fetch it when appropriate
             property int newSpeed: -1
 
+            property int introScrollCount: 0
             onTriggered: {
                 if(newSpeed !== -1) {
                     speed = newSpeed;
                     newSpeed = -1;
                 }
+                if (settings.introStep < Settings.IntroStepDone) {
+                    if (settings.introStep == Settings.IntroStepScroll) {
+                        rumbleEffect.start(1);
+                        introScrollCount++;
+                        if (introScrollCount >= 10) {
+                            settings.introStep++;
+                        }
+                    }
+                    return;
+                }
+
                 mouseArea.doKeyPress();
             }
         }
@@ -233,6 +258,18 @@ Item {
             // Did we not move? => press enter
             if (dxAbs < maxClickDistance && dyAbs < maxClickDistance) {
                 print("pressing enter")
+                if (settings.introStep < Settings.IntroStepDone) {
+                    if (settings.introStep == Settings.IntroStepClick || settings.introStep == Settings.IntroStepColors) {
+                        settings.introStep++;
+                    }
+                    // If the user just clicked here during the colors step, let's skip the exit step
+                    if (settings.introStep == Settings.IntroStepExit) {
+                        settings.introStep++;
+                    }
+
+                    return;
+                }
+
                 keys.select();
                 rumbleEffect.start(1);
                 animateAll();
@@ -252,6 +289,13 @@ Item {
             // Reason is that the thumb can easily produce large vertical deltas
             // just by touching the screen with more than the tip
             if (dxAbs > minSwipeDistance * 2 || dxAbs > dyAbs) {
+                if (settings.introStep < Settings.IntroStepDone) {
+                    if (settings.introStep == Settings.IntroStepLeftRight) {
+                        settings.introStep++;
+                    }
+                    return;
+                }
+
                 if (dx < 0) {
                     leftArrows.item.animate();
                     keys.left();
@@ -260,6 +304,12 @@ Item {
                     keys.right();
                 }
             } else {
+                if (settings.introStep < Settings.IntroStepDone) {
+                    if (settings.introStep == Settings.IntroStepUpDown) {
+                        settings.introStep++;
+                    }
+                    return;
+                }
                 if (dy < 0) {
                     upArrows.item.animate();
                     keys.up();

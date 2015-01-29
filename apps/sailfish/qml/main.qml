@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -22,12 +22,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 import "components"
+import "cover"
 
 ApplicationWindow
 {
     id: appWindow
 
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    cover: CoverPage {
+        id: cover
+    }
+
     initialPage: mainPageComponent
     bottomMargin: dockedControls.visibleSize
 
@@ -40,6 +44,13 @@ ApplicationWindow
 
     DockedControls {
         id: dockedControls
+    }
+
+    Binding {
+        target: kodi
+        property: "active"
+        //!== Inactive to try to minimize all the switches when maximizing and minimizing the app
+        value: Qt.application.active || cover.status !== Cover.Inactive
     }
 
     function showAuthenticate(hostname) {
@@ -71,7 +82,7 @@ ApplicationWindow
     }
 
     Connections {
-        target: xbmc
+        target: kodi
         onAuthenticationRequired: {
             if (pageStack.busy) {
                 delayedAuthenticate.hostname = hostname;
@@ -141,31 +152,16 @@ ApplicationWindow
     property variant inputDialog
 
     Connections {
-        target: xbmc.keys()
+        target: kodi.keys()
         onInputRequested: {
-            if (type === "date") {
-                appWindow.inputDialog = datePickerComponent.createObject(appWindow);
-            } else if (type === "time") {
-                appWindow.inputDialog = timePickerComponent.createObject(appWindow);
+            if (pageStack.busy) {
+                delayedInputDialog.title = title
+                delayedInputDialog.type = type;
+                delayedInputDialog.value = value;
+                delayedInputDialog.start();
             } else {
-                appWindow.inputDialog = inputComponent.createObject(appWindow);
-                appWindow.inputDialog.title = title;
-
-                if (type === "number" || type === "numericpassword" || type === "seconds") {
-                    appWindow.inputDialog.inputMethodHints = Qt.ImhDigitsOnly;
-                }
+                showInputDialog(title, type, value);
             }
-
-            appWindow.inputDialog.initialValue = value;
-            appWindow.inputDialog.accepted.connect(function() {
-                var value = appWindow.inputDialog.value;
-                console.log("Sending text: " + value)
-                xbmc.keys().sendText(value);
-            });
-            appWindow.inputDialog.rejected.connect(function() {
-                xbmc.keys().previousMenu();
-            });
-            appWindow.inputDialog.open();
         }
         onInputFinished: {
             if (appWindow.inputDialog) {
@@ -173,5 +169,51 @@ ApplicationWindow
                 appWindow.inputDialog = null;
             }
         }
+    }
+
+    Timer {
+        id: delayedInputDialog
+        interval: 10
+        repeat: true
+        running: false
+        onTriggered: {
+            if (pageStack.busy) {
+                return;
+            }
+
+            stop();
+            showInputDialog(title, type, value);
+        }
+        property string title
+        property string type
+        property string value
+    }
+
+    function showInputDialog(title, type, value) {
+        if (type === "date") {
+            appWindow.inputDialog = datePickerComponent.createObject(appWindow);
+        } else if (type === "time") {
+            appWindow.inputDialog = timePickerComponent.createObject(appWindow);
+        } else {
+            appWindow.inputDialog = inputComponent.createObject(appWindow);
+            appWindow.inputDialog.title = title;
+
+            if (type === "number" || type === "numericpassword" || type === "seconds") {
+                appWindow.inputDialog.inputMethodHints = Qt.ImhDigitsOnly;
+            }
+        }
+
+        appWindow.inputDialog.initialValue = value;
+        appWindow.inputDialog.accepted.connect(function() {
+            var value = appWindow.inputDialog.value;
+            console.log("Sending text: " + value)
+            kodi.keys().sendText(value);
+            appWindow.inputDialog = null;
+        });
+        appWindow.inputDialog.rejected.connect(function() {
+            kodi.keys().previousMenu();
+            appWindow.inputDialog = null;
+        });
+        appWindow.inputDialog.open();
     }
 }

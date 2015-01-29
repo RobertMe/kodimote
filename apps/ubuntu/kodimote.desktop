@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Kodimote
+Comment=Remote control app for Kodi
+Exec=./kodimote %u
+Terminal=false
+Icon=kodimote.svg
+X-Ubuntu-Touch=true

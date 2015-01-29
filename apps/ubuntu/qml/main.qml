@@ -1,14 +1,14 @@
 /*****************************************************************************
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -23,7 +23,7 @@ import QtQuick.Layouts 1.1
 import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0 as ListItems
-import Xbmc 1.0
+import Kodi 1.0
 import "components"
 
 MainView {
@@ -42,21 +42,27 @@ MainView {
 
     focus: true
     Keys.onVolumeUpPressed: {
-        xbmc.volumeUp();
+        kodi.volumeUp();
     }
 
     Keys.onVolumeDownPressed: {
-        xbmc.volumeDown();
+        kodi.volumeDown();
+    }
+
+    Binding {
+        target: kodi
+        property: "active"
+        value: Qt.application.active
     }
 
     Loader {
         anchors.fill: parent
-        sourceComponent: xbmc.connected ? mainComponent : noConnectionComponent
+        sourceComponent: kodi.connected ? mainComponent : noConnectionComponent
     }
 
     Connections {
-        target: xbmc
-        onConnectingChanged: print("connecting.....", xbmc.connecting)
+        target: kodi
+        onConnectingChanged: print("connecting.....", kodi.connecting)
 
         onAuthenticationRequired: {
             print("auth required");
@@ -72,7 +78,7 @@ MainView {
     }
 
     Connections {
-        target: xbmc.keys()
+        target: kodi.keys()
         onInputRequested: {
             if (type === "date") {
                 var year = value.split("/")[2]
@@ -105,14 +111,14 @@ MainView {
         id: noConnectionComponent
         Page {
             id: noConnectionPage
-            title: xbmc.connecting ? qsTr("Connecting...") : qsTr("Select Host")
+            title: kodi.connecting ? qsTr("Connecting...") : qsTr("Select Host")
             anchors.fill: parent
-            property bool showList: !xbmc.connecting
+            property bool showList: !kodi.connecting
 
             ListView {
                 id: hostListView
                 anchors.fill: parent
-                model: xbmc.hostModel()
+                model: kodi.hostModel()
                 opacity: noConnectionPage.showList ? 1 : 0
                 Behavior on opacity { UbuntuNumberAnimation {} }
 
@@ -122,21 +128,21 @@ MainView {
 
                     onClicked: {
                         noConnectionPage.showList = false
-                        xbmc.hostModel().host(index).connect()
+                        kodi.hostModel().host(index).connect()
                     }
 
                     onPressAndHold: {
                         var obj = PopupUtils.open(removePopoverComponent, hostDelegate)
                         obj.removeClicked.connect(function() {
-                            xbmc.hostModel().removeHost(index)
+                            kodi.hostModel().removeHost(index)
                             PopupUtils.close(obj)
                         })
                         obj.wakeupClicked.connect(function() {
-                            xbmc.hostModel().host(index).wakeup();
+                            kodi.hostModel().host(index).wakeup();
                             PopupUtils.close(obj)
                         })
                         obj.editClicked.connect(function() {
-                            PopupUtils.open(addHostComponent, noConnectionPage, {host: xbmc.hostModel().host(index)});
+                            PopupUtils.open(addHostComponent, noConnectionPage, {host: kodi.hostModel().host(index)});
                         })
                     }
                 }
@@ -161,16 +167,16 @@ MainView {
                         fontSize: "small"
                         width: parent.width
                         wrapMode: Text.WordWrap
-                        text: qsTr("Searching for XBMC hosts.") + "\n" + "\n"
-                              + qsTr("Please enable the following options in the Services settings of XBMC:") + "\n- "
-                              + qsTr("Allow control of XBMC via HTTP") + "\n- "
-                              + qsTr("Allow programs on other systems to control XBMC") + "\n- "
+                        text: qsTr("Searching for Kodi hosts.") + "\n" + "\n"
+                              + qsTr("Please enable the following options in the Services settings of Kodi:") + "\n- "
+                              + qsTr("Allow control of Kodi via HTTP") + "\n- "
+                              + qsTr("Allow programs on other systems to control Kodi") + "\n- "
                               + qsTr("Announce these services to other systems via Zeroconf") + "\n"
                               + qsTr("If you don't use Zeroconf, add a host manually.");
                     }
                 }
 
-                XbmcDiscovery {
+                KodiDiscovery {
                     continuousDiscovery: noConnectionPage.showList
                 }
 
@@ -194,7 +200,7 @@ MainView {
                         left: parent.left
                         right: parent.right
                     }
-                    text: xbmc.connectionError
+                    text: kodi.connectionError
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -202,9 +208,9 @@ MainView {
                     fontSize: "small"
                     width: parent.width
                     wrapMode: Text.WordWrap
-                    text: qsTr("Please enable the following options in the Services settings of XBMC:") + "\n- "
-                          + qsTr("Allow control of XBMC via HTTP") + "\n- "
-                          + qsTr("Allow programs on other systems to control XBMC")
+                    text: qsTr("Please enable the following options in the Services settings of Kodi:") + "\n- "
+                          + qsTr("Allow control of Kodi via HTTP") + "\n- "
+                          + qsTr("Allow programs on other systems to control Kodi")
                 }
 
                 Button{
@@ -234,14 +240,14 @@ MainView {
                                 newHost.destroy();
                             })
                             popup.accepted.connect(function() {
-                                xbmc.hostModel().addHost(newHost);
+                                kodi.hostModel().addHost(newHost);
                             })
                         }
 
                     }
                     Component {
                         id: newHostComponent
-                        XbmcHost {}
+                        KodiHost {}
                     }
                 }
             }
@@ -316,10 +322,10 @@ MainView {
                             property bool conflicting: false
 
                             onTextChanged: {
-                                print("model count", xbmc.hostModel().count)
-                                for (var i = 0; i < xbmc.hostModel().count; ++i) {
-                                    print("got:", xbmc.hostModel().host(i).hostname)
-                                    if (xbmc.hostModel().host(i).hostname == text) {
+                                print("model count", kodi.hostModel().count)
+                                for (var i = 0; i < kodi.hostModel().count; ++i) {
+                                    print("got:", kodi.hostModel().host(i).hostname)
+                                    if (kodi.hostModel().host(i).hostname == text) {
                                         conflicting = true;
                                         return;
                                     }
@@ -535,14 +541,14 @@ MainView {
             id: authDialog
 //            title: qsTr("Add host")
 //            title: hostname
-//            title: qsTr("XBMC on %1 requires authentication:").arg(hostname);
+//            title: qsTr("Kodi on %1 requires authentication:").arg(hostname);
 
             property string hostname
 
             Flickable {
                 id: flickbl
                 width: parent.width
-                height: units.gu(60)
+                height: contentHeight
                 contentHeight: authColumn.height
                 interactive: contentHeight > height
                 Column {
@@ -551,11 +557,13 @@ MainView {
                     spacing: units.gu(1)
                     Label {
                         width: parent.width
-                        text: qsTr("XBMC on %1 requires authentication:").arg(hostname);
+                        text: qsTr("Kodi on %1 requires authentication:").arg(hostname);
                         wrapMode: Text.WordWrap
+                        color: "black"
                     }
                     Label {
                         text: qsTr("Username")
+                        color: "black"
                     }
                     TextField {
                         width: parent.width
@@ -563,6 +571,7 @@ MainView {
                     }
                     Label {
                         text: qsTr("Password")
+                        color: "black"
                     }
                     TextField {
                         width: parent.width
@@ -581,15 +590,10 @@ MainView {
                             text: qsTr("OK")
                             width: (parent.width - parent.spacing) / 2
                             onClicked: {
-                                xbmc.setAuthCredentials(username.text, password.text);
+                                kodi.setAuthCredentials(username.text, password.text);
                                 PopupUtils.close(authDialog)
                             }
                         }
-                    }
-
-                    Item {
-                        width: parent.width
-                        height: Qt.inputMethod.keyboardRectangle.height
                     }
                 }
             }
@@ -603,10 +607,10 @@ MainView {
                 var date = new Date(year, month, day);
                 var dateString = Qt.formatDate(date, "dd/MM/yyyy");
                 print("Sending text", dateString);
-                xbmc.keys().sendText(dateString);
+                kodi.keys().sendText(dateString);
             }
             onRejected: {
-                xbmc.keys().previousMenu();
+                kodi.keys().previousMenu();
             }
         }
     }
@@ -618,10 +622,10 @@ MainView {
                 var date = new Date(0, 0, 0, hour, minute);
                 var timeString = Qt.formatTime(date, "hh:mm");
                 print("Sending text", timeString);
-                xbmc.keys().sendText(timeString);
+                kodi.keys().sendText(timeString);
             }
             onRejected: {
-                xbmc.keys().previousMenu();
+                kodi.keys().previousMenu();
             }
         }
     }
@@ -657,10 +661,10 @@ MainView {
                 }
             }
             onConfirmClicked: {
-                xbmc.keys().sendText(inputField.text);
+                kodi.keys().sendText(inputField.text);
             }
             onCancelClicked: {
-                xbmc.keys().previousMenu();
+                kodi.keys().previousMenu();
             }
         }
     }

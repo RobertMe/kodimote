@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 import QtQuick.Layouts 1.1
-import Xbmc 1.0
+import Kodi 1.0
 
 Item {
     id: root
@@ -126,14 +126,17 @@ Item {
                 RowLayout {
                     Layout.fillWidth: true
                     Label {
-                        text: xbmc.connectedHostName
+                        text: kodi.connectedHostName
                         Layout.fillWidth: true
                         color: "black"
                     }
                     BottomEdgeButton {
                         source: "image://theme/system-shutdown"
                         onClicked: {
-                            PopupUtils.open(Qt.resolvedUrl("PowerMenu.qml"), root)
+                            var dialog = PopupUtils.open(Qt.resolvedUrl("PowerMenu.qml"), root)
+                            dialog.selectUser.connect(function() {
+                                PopupUtils.open(Qt.resolvedUrl("ProfileSelectionDialog.qml"), root)
+                            })
                         }
                     }
                 }
@@ -149,29 +152,40 @@ Item {
                         source: "image://theme/speaker-mute"
                         Layout.fillWidth: !volumeSlider.visible
                         onClicked: {
-                            xbmc.volumeDown();
+                            kodi.volumeDown();
                         }
                     }
 
                     Slider {
                         id: volumeSlider
-                        enabled: xbmc.connectedHost.volumeControlType !== XbmcHost.VolumeControlTypeRelative
+                        enabled: kodi.connectedHost.volumeControlType !== KodiHost.VolumeControlTypeRelative
                         visible: enabled
                         Layout.fillWidth: true
-                        onValueChanged: {
-                            xbmc.volume = value
+                        live: true
+                        onPressedChanged: {
+                            if (!pressed) {
+                                kodi.volume = value
+                            }
                         }
                         Binding {
                             target: volumeSlider
                             property: "value"
-                            value: xbmc.volume
+                            value: kodi.volume
+                        }
+                        Timer {
+                            interval: 100
+                            running: volumeSlider.pressed
+                            repeat: true
+                            onTriggered: {
+                                kodi.volume = volumeSlider.value
+                            }
                         }
                     }
                     BottomEdgeButton {
                         source: "image://theme/speaker"
                         Layout.fillWidth: !volumeSlider.visible
                         onClicked: {
-                            xbmc.volumeUp();
+                            kodi.volumeUp();
                         }
                     }
                 }

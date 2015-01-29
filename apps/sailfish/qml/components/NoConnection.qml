@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -53,20 +53,20 @@ Item {
                 id: label
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 100
-                text: xbmc.connectionError
+                text: kodi.connectionError
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 color: Theme.highlightColor
             }
 
             Label {
-                visible: !!xbmc.connectionError
+                visible: !!kodi.connectionError
                 width: parent.width - (Theme.paddingLarge * 2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.WordWrap
-                text: qsTr("Please enable the following options in the Services settings of XBMC:") + "\n- "
-                      + qsTr("Allow control of XBMC via HTTP") + "\n- "
-                      + qsTr("Allow programs on other systems to control XBMC")
+                text: qsTr("Please enable the following options in the Services settings of Kodi:") + "\n- "
+                      + qsTr("Allow control of Kodi via HTTP") + "\n- "
+                      + qsTr("Allow programs on other systems to control Kodi")
                 color: Theme.highlightColor
             }
 
@@ -74,6 +74,16 @@ Item {
                 text: qsTr("Connect")
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: noConnection.showConnect()
+            }
+
+            Button {
+                text: qsTr("Wake host")
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: kodi.connecting && kodi.connectedHost && kodi.connectedHost.hwAddr
+                enabled: kodi.connectedHost.hwAddr
+                onClicked: {
+                    kodi.connectedHost.wakeup();
+                }
             }
         }
     }

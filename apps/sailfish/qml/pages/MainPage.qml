@@ -2,14 +2,14 @@
  * Copyright: 2011-2013 Michael Zanetti <michael_zanetti@gmx.net>            *
  *            2014      Robert Meijers <robert.meijers@gmail.com>            *
  *                                                                           *
- * This file is part of Xbmcremote                                           *
+ * This file is part of Kodimote                                           *
  *                                                                           *
- * Xbmcremote is free software: you can redistribute it and/or modify        *
+ * Kodimote is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
  *                                                                           *
- * Xbmcremote is distributed in the hope that it will be useful,             *
+ * Kodimote is distributed in the hope that it will be useful,             *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
  * GNU General Public License for more details.                              *
@@ -26,7 +26,7 @@ import "../components/"
 Page {
     id: mainPage
 
-    property bool connected: xbmc.connected
+    property bool connected: kodi.connected
 
     states: [
         State {
@@ -39,13 +39,15 @@ Page {
     ]
 
     onConnectedChanged: {
-        pageStack.pop(mainPage);
-        populateMainMenu();
         if (connected) {
-            pageStack.pushAttached("XbmcPage.qml");
+            pageStack.pushAttached("KodiPage.qml");
         } else {
-            pageStack.popAttached();
+            try {
+            pageStack.popAttached(undefined, PageStackAction.Immediate);
+            } catch (e) {}
         }
+        pageStack.pop(mainPage, PageStackAction.Immediate);
+        populateMainMenu();
     }
 
     function showConnect(operationType) {
@@ -68,10 +70,11 @@ Page {
 
         var newModel;
         if (menuModel.mode === "library") {
-            newModel = xbmc[menuModel.libraryTarget]();
+            newModel = kodi[menuModel.libraryTarget]();
         } else {
-                newModel = xbmc.shares(menuModel.target);
+            newModel = kodi.shares(menuModel.target);
         }
+
 
         console.log("setting model: " + newModel);
         var browser = pageStack.push("BrowserPage.qml", {model: newModel});
@@ -89,7 +92,7 @@ Page {
         header: PageHeader {
             id: pageHeader
             visible: false
-            title: qsTr("Browse %1").arg(xbmc.connectedHostName)
+            title: qsTr("Browse %1").arg(kodi.connectedHostName)
         }
 
         PullDownMenu {
@@ -109,7 +112,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Now playing")
-                enabled: xbmc.activePlayer !== null
+                enabled: kodi.activePlayer !== null
                 onClicked: {
                     pageStack.push("NowPlayingPage.qml")
                 }
@@ -120,6 +123,7 @@ Page {
             MenuItem {
                 text: qsTr("Change connection...")
                 onClicked: showConnect()
+                visible: kodi.connected
             }
 
             MenuItem {
@@ -173,21 +177,6 @@ Page {
                     font.weight: Font.Bold
                     font.pixelSize: Theme.fontSizeLarge
                 }
-
-                Label {
-                    id: subText
-                    text: {
-                        if (mode === "library") {
-                            return qsTr("Library");
-                        } else if (mode == "files") {
-                            return qsTr("Files");
-                        } else {
-                            return ""
-                        }
-                    }
-                    visible: libraryTarget && sharesTarget
-                    color: Theme.secondaryColor
-                }
             }
 
             onPressed: listView.currentSelected = index;
@@ -203,25 +192,9 @@ Page {
                     id: contextMenu
 
                     MenuItem {
-                        visible: mode !== "files" && mode !== "single"
-                        text: qsTr("Show files")
-                        onClicked: {
-                            listView.model.get(listView.currentSelected).mode = "files";
-                            settings[target + "ShowsFiles"] = true;
-                        }
-                    }
-                    MenuItem {
-                        visible: mode !== "library" && mode !== "single"
-                        text: qsTr("Show library")
-                        onClicked: {
-                            listView.model.get(listView.currentSelected).mode = "library";
-                            settings[target + "ShowsFiles"] = false;
-                        }
-                    }
-                    MenuItem {
                         text: qsTr("Rescan library")
                         onClicked: {
-                            var lib = xbmc[libraryTarget]();
+                            var lib = kodi[libraryTarget]();
                             lib.scanForContent();
                             lib.exit();
                         }
@@ -229,7 +202,7 @@ Page {
                     MenuItem {
                         text: qsTr("Clean library")
                         onClicked: {
-                            var lib = xbmc[libraryTarget]();
+                            var lib = kodi[libraryTarget]();
                             lib.clean();
                             lib.exit();
                         }
@@ -241,12 +214,14 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (!xbmc.connected && !xbmc.connecting) {
+            if (!kodi.connected && !kodi.connecting) {
                 showConnect();
             }
 
-            if (xbmc.connected) {
-                pageStack.pushAttached("XbmcPage.qml");
+            if (kodi.connected) {
+                pageStack.pushAttached("KodiPage.qml");
+            } else {
+                pageStack.popAttached();
             }
         }
     }
@@ -263,7 +238,6 @@ Page {
             mode: "library"
             target: "music"
             libraryTarget: "audioLibrary"
-            sharesTarget: "music"
             hasMenu: true
         }
         ListElement {
@@ -272,7 +246,6 @@ Page {
             mode: "library"
             target: "video"
             libraryTarget: "videoLibrary"
-            sharesTarget: "video"
             hasMenu: true
         }
         ListElement {
@@ -327,15 +300,8 @@ Page {
         if (settings.picturesEnabled) {
             mainMenuModel.append(mainMenuModelTemplate.get(2));
         }
-        if (settings.pvrEnabled && xbmc.pvrAvailable) {
+        if (settings.pvrEnabled && kodi.pvrAvailable) {
             mainMenuModel.append(mainMenuModelTemplate.get(3));
-        }
-
-        if(settings.musicShowsFiles) {
-           mainMenuModel.setProperty(0, "mode", "files");
-        }
-        if(settings.videoShowsFiles) {
-            mainMenuModel.setProperty(1, "mode", "files");
         }
     }
 
@@ -348,7 +314,7 @@ Page {
     }
 
     Connections {
-        target: xbmc
+        target: kodi
         onPvrAvailableChanged: populateMainMenu();
     }
 }

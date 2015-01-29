@@ -6,66 +6,79 @@ Dialog {
     id: powerMenu
     title: qsTr("Power menu")
 
+    signal selectUser()
+
     Column {
         anchors { left: parent.left; right: parent.right }
         spacing: units.gu(1)
 
         Button {
+            text: qsTr("Change user")
+            width: parent.width
+            iconName: "contact"
+            visible: kodi.profiles().count > 1
+            onClicked: {
+                powerMenu.selectUser();
+                PopupUtils.close(powerMenu)
+            }
+        }
+
+        Button {
             text: qsTr("Disconnect")
             width: parent.width
-            iconName: "close"
+            iconName: "stop"
             onClicked: {
-                xbmc.disconnectFromHost();
+                kodi.disconnectFromHost();
                 PopupUtils.close(powerMenu)
             }
         }
         Button {
-            text: qsTr("Quit XBMC")
+            text: qsTr("Quit Kodi")
             width: parent.width
             iconName: "system-log-out"
             onClicked: {
-                xbmc.quit();
+                kodi.quit();
                 PopupUtils.close(powerMenu)
             }
         }
         Button {
-            text: qsTr("Shutdown XBMC host")
+            text: qsTr("Shutdown Kodi host")
             width: parent.width
             iconName: "system-shutdown"
-            visible: xbmc.canShutdown
+            visible: kodi.canShutdown
             onClicked: {
-                xbmc.quit();
+                kodi.quit();
                 PopupUtils.close(powerMenu)
             }
         }
         Button {
-            text: qsTr("Reboot XBMC host")
+            text: qsTr("Reboot Kodi host")
             iconName: "system-restart"
             width: parent.width
-            visible: xbmc.canReboot
+            visible: kodi.canReboot
             onClicked: {
-                xbmc.reboot();
+                kodi.reboot();
                 PopupUtils.close(powerMenu)
             }
         }
         Button {
-            text: qsTr("Suspend XBMC host")
+            text: qsTr("Suspend Kodi host")
             width: parent.width
             iconName: "torch-off"
-            visible: xbmc.canSuspend
+            visible: kodi.canSuspend
             onClicked: {
                 PopupUtils.close(powerMenu)
-                xbmc.suspend();
+                kodi.suspend();
             }
         }
         Button {
-            text: qsTr("Hibernate XBMC host")
+            text: qsTr("Hibernate Kodi host")
             width: parent.width
-            visible: xbmc.canHibernate
+            visible: kodi.canHibernate
             iconName: "save"
             onClicked: {
                 PopupUtils.close(powerMenu)
-                xbmc.hibernate();
+                kodi.hibernate();
             }
         }
         Button {
