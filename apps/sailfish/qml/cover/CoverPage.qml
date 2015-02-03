@@ -77,7 +77,7 @@ CoverBackground {
         width: cover.hasThumbnail > 0 ? parent.width - 2*Theme.paddingLarge : 80
 
         anchors.top: parent.top
-        anchors.bottom: description.top
+        anchors.bottom: textColumn.top
         anchors.topMargin: Theme.paddingLarge
         anchors.bottomMargin: Theme.paddingLarge
         anchors.horizontalCenter: parent.horizontalCenter
@@ -87,18 +87,34 @@ CoverBackground {
         fillMode: Image.PreserveAspectFit
     }
 
-    Label {
-        id: description
+    Column {
+        id: textColumn
         anchors.verticalCenter: cover.verticalCenter
         anchors.left: cover.left
         anchors.right: cover.right
         anchors.leftMargin: Theme.paddingLarge
         anchors.rightMargin: Theme.paddingLarge
-        color: Theme.primaryColor
-        horizontalAlignment: Text.AlignHCenter
-        wrapMode: Text.Wrap
-        fontSizeMode: Text.HorizontalFit
-        height: lineCount * font.pixelSize
+        height: childrenRect.height
+
+        Label {
+            id: description1
+            color: Theme.primaryColor
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            fontSizeMode: Text.HorizontalFit
+            width: parent.width
+            height: lineCount * font.pixelSize
+        }
+
+        Label {
+            id: description2
+            color: Theme.primaryColor
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            fontSizeMode: Text.HorizontalFit
+            width: parent.width
+            height: lineCount * font.pixelSize
+        }
     }
 
     CoverActionList {
@@ -117,8 +133,12 @@ CoverBackground {
         State {
             when: cover.player && (cover.player.state === "playing" || cover.player.state === "paused")
             PropertyChanges {
-                target: description
-                text: cover.currentItem ? (cover.currentItem.title + "\n" + cover.currentItem.subtitle) : ""
+                target: description1
+                text: cover.currentItem ? cover.currentItem.title : ""
+            }
+            PropertyChanges {
+                target: description2
+                text: cover.currentItem ? cover.currentItem.subtitle : ""
             }
             PropertyChanges {
                 target: leftAction
@@ -134,8 +154,12 @@ CoverBackground {
         State {
             when: kodi.connected
             PropertyChanges {
-                target: description
-                text: qsTr("Kodi on") + "\n" + kodi.connectedHostName
+                target: description1
+                text: qsTr("Kodi on")
+            }
+            PropertyChanges {
+                target: description2
+                text: kodi.connectedHostName
             }
             PropertyChanges {
                 target: leftAction
@@ -151,9 +175,12 @@ CoverBackground {
         State {
             when: !kodi.connected
             PropertyChanges {
-                target: description
-                text: qsTr("Kodimote") + "\n" +
-                      qsTr("Disconnected")
+                target: description1
+                text: qsTr("Kodimote")
+            }
+            PropertyChanges {
+                target: description2
+                text: qsTr("Disconnected")
             }
             PropertyChanges {
                 target: leftAction
@@ -168,5 +195,3 @@ CoverBackground {
         }
     ]
 }
-
-
