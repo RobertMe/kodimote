@@ -117,6 +117,16 @@ CoverBackground {
         }
     }
 
+    Label {
+        id: playTime
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.paddingLarge
+        anchors.top: textColumn.bottom
+        anchors.topMargin: Theme.paddingLarge
+        color: Theme.primaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall * .75
+    }
+
     CoverActionList {
         id: actions
 
@@ -139,6 +149,14 @@ CoverBackground {
             PropertyChanges {
                 target: description2
                 text: cover.currentItem ? cover.currentItem.subtitle : ""
+            }
+            PropertyChanges {
+                target: playTime
+                text: cover.player.time + " / " + cover.player.currentItem.durationString
+            }
+            PropertyChanges {
+                target: cover.player
+                timerActive: cover.status !== Cover.Inactive
             }
             PropertyChanges {
                 target: leftAction

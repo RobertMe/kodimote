@@ -44,9 +44,12 @@ Page {
         }
     }
 
-    property bool timerActive: Qt.application.active && nowPlayingPage.status == PageStatus.Active
-
-    onTimerActiveChanged: { player.timerActive = timerActive }
+    Binding {
+        when: Qt.application.active && nowPlayingPage.status == PageStatus.Active
+        target: player
+        property: "timerActive"
+        value: true
+    }
 
     SilicaFlickable {
         anchors.fill: parent
