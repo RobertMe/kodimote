@@ -2,6 +2,11 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
+#ifdef QT5_BUILD
+#include <QtQuick>
+#else
+#include <QtDeclarative>
+#endif
 
 #include "actionmodel.h"
 #include "changehostaction.h"
@@ -10,6 +15,18 @@
 ActionManager::ActionManager(QObject *parent) :
     QObject(parent)
 {
+#ifdef SAILFISH
+    // @uri harbour.kodimote
+    const char *qmlUri = "harbour.kodimote";
+#else
+    // @uri Kodi
+    const char *qmlUri = "Kodi";
+#endif
+
+    qmlRegisterUncreatableType<Action>(qmlUri, 1, 0, "Action", "Cannot create action. Use the 'actions' ActionManager instead");
+    qmlRegisterUncreatableType<ActionModel>(qmlUri, 1, 0, "ActionModel", "Cannot create action model. Use the 'actions.list' instead");
+    qRegisterMetaType<Action::UseCase>();
+
     registerAction(&ChangeHostAction::staticMetaObject, Action::UseCaseDisconnected | Action::UseCaseConnected | Action::UseCasePlaying);
     registerAction(&PlayPauseAction::staticMetaObject, Action::UseCasePlaying);
 }
