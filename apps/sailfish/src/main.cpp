@@ -35,6 +35,9 @@
 #include "libkodimote/mpris2/mpriscontroller.h"
 #include "sailfishhelper.h"
 
+#include "libkodimote/actions/actionmanager.h"
+#include "libkodimote/actions/actionmodel.h"
+
 #include <sailfishapp.h>
 
 int main(int argc, char *argv[])
@@ -67,6 +70,7 @@ int main(int argc, char *argv[])
     QQuickView *view = SailfishApp::createView();
 
     Settings settings;
+    ActionManager actions;
 
     SailfishHelper helper(view, &settings);
 
@@ -75,13 +79,17 @@ int main(int argc, char *argv[])
     MprisController controller(&protocols, &helper);
     Q_UNUSED(controller)
 
+    qmlRegisterUncreatableType<Action>("harbour.kodimote", 1, 0, "Action", "Cannot create action. Use the 'actions' ActionManager instead");
+    qmlRegisterUncreatableType<ActionModel>("harbour.kodimote", 1, 0, "ActionModel", "Cannot create action model. Use the 'actions.list' instead");
+    qRegisterMetaType<Action::UseCase>();
+
     view->engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory());
     view->engine()->rootContext()->setContextProperty("kodi", Kodi::instance());
     view->engine()->rootContext()->setContextProperty("settings", &settings);
+    view->engine()->rootContext()->setContextProperty("actions", &actions);
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
 
     view->show();
 
     return application->exec();
 }
-

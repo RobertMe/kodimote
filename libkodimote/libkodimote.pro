@@ -85,7 +85,12 @@ SOURCES +=  kodi.cpp \
             protocolhandlers/nativeprotocolhandler.cpp \
             platformhelper.cpp \
             playlists.cpp \
-            playlistcontent.cpp
+            playlistcontent.cpp \
+            actions/actionmanager.cpp \
+            actions/action.cpp \
+            actions/changehostaction.cpp \
+            actions/actionmodel.cpp \
+            actions/playpauseaction.cpp
 
 HEADERS += libkodimote_global.h \
            kodi.h \
@@ -152,4 +157,9 @@ HEADERS += libkodimote_global.h \
            protocolhandlers/nativeprotocolhandler.h \
            platformhelper.h \
            playlists.h \
-           playlistcontent.h
+           playlistcontent.h \
+           actions/actionmanager.h \
+           actions/action.h \
+           actions/changehostaction.h \
+           actions/actionmodel.h \
+           actions/playpauseaction.h

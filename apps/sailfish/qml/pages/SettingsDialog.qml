@@ -21,12 +21,10 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.kodimote 1.0
 
 Dialog {
-    Component.onCompleted: {
-        console.log("settings: " + settings);
-        console.log("use thumbnail: " + settings.useThumbnails);
-    }
+    id: dialog
 
     SilicaFlickable {
         anchors.fill: parent
@@ -140,6 +138,12 @@ Dialog {
                 id: showNotifications
                 text: qsTr("Show call notifications")
                 checked: settings.showCallNotifications
+            }
+
+            Button {
+                text: qsTr("Configure cover actions")
+                onClicked: pageStack.push("CoverActionsDialog.qml")
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }

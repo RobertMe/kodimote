@@ -53,5 +53,6 @@ OTHER_FILES += \
     qml/components/DockedControls.qml \
     qml/components/ControlsMenuItem.qml \
     qml/pages/ProfileSelectionDialog.qml \
-    qml/pages/ResumeDialog.qml
+    qml/pages/ResumeDialog.qml \
+    qml/pages/CoverActionsDialog.qml
 

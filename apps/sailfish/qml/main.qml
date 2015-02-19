@@ -224,4 +224,11 @@ ApplicationWindow
         });
         appWindow.inputDialog.open();
     }
+
+    Connections {
+        target: actions
+        onOpenPage: {
+            console.log("openPage" + pageName);
+        }
+    }
 }
