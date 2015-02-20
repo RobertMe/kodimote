@@ -1,70 +1,23 @@
 #include "actionmodel.h"
 
-ActionModel::ActionModel(QObject *parent) :
-    QAbstractItemModel(parent)
+#include "actionmanager.h"
+
+ActionModel::ActionModel(Action::UseCases useCases, QObject *parent) :
+    QSortFilterProxyModel(parent)
 {
-#ifndef QT5_BUILD
-    setRoleNames(roleNames());
-#endif
+    m_useCases = useCases;
 }
 
-void ActionModel::exit()
+bool ActionModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    deleteLater();
-}
-
-QVariant ActionModel::data(const QModelIndex &index, int role) const
-{
-    if(index.row() < 0 || index.row() >= m_actions.count()) {
-        return QVariant();
+    if (!QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent)) {
+        return false;
     }
 
-    const Action *action = m_actions[index.row()];
-    switch (role) {
-    case RoleTitle:
-        return action->title();
-    case RoleIcon:
-        return action->icon();
-    default:
-        return QVariant();
+    ActionManager *manager = qobject_cast<ActionManager*>(sourceModel());
+    if (!manager) {
+        return false;
     }
-}
 
-int ActionModel::columnCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return 1;
-}
-
-QModelIndex ActionModel::index(int row, int column, const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return createIndex(row, column);
-}
-
-QModelIndex ActionModel::parent(const QModelIndex &child) const
-{
-    Q_UNUSED(child)
-    return QModelIndex();
-}
-
-int ActionModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return m_actions.count();
-}
-
-void ActionModel::insertAction(Action *action)
-{
-    action->setParent(this);
-    m_actions.append(action);
-}
-
-QHash<int, QByteArray> ActionModel::roleNames() const
-{
-    QHash<int, QByteArray> roleNames;
-    roleNames.insert(RoleTitle, "title");
-    roleNames.insert(RoleIcon, "icon");
-
-    return roleNames;
+    return manager->get(source_row)->useCases() & m_useCases;
 }

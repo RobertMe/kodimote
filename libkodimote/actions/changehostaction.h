@@ -11,8 +11,10 @@ public:
 
     ~ChangeHostAction();
 
+    QString identifier() const { return "changeHost"; }
     QString icon() const;
     QString title() const;
+    UseCases useCases() const;
 
     Q_INVOKABLE void execute();
 };

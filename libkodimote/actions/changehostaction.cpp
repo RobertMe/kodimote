@@ -21,6 +21,11 @@ QString ChangeHostAction::title() const
     return tr("Change host");
 }
 
+Action::UseCases ChangeHostAction::useCases() const
+{
+    return UseCaseDisconnected | UseCaseConnected | UseCasePlaying;
+}
+
 void ChangeHostAction::execute()
 {
     emit m_manager->openPage("changeHost");

@@ -24,6 +24,11 @@ QString PlayPauseAction::title() const
     return tr("Play/Pause");
 }
 
+Action::UseCases PlayPauseAction::useCases() const
+{
+    return UseCasePlaying;
+}
+
 void PlayPauseAction::execute()
 {
     emit Kodi::instance()->activePlayer()->playPause();

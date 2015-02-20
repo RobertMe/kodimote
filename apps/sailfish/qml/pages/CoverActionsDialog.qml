@@ -30,12 +30,6 @@ Dialog {
     property variant connectedActions: actions.list(Action.UseCaseConnected)
     property variant playingActions: actions.list(Action.UseCasePlaying)
 
-    Component.onDestruction: {
-        dialog.disconnectedActions.exit();
-        dialog.connectedActions.exit();
-        dialog.playingActions.exit();
-    }
-
     SilicaFlickable {
         anchors.fill: parent
 

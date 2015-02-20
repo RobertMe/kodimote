@@ -11,8 +11,10 @@ public:
 
     ~PlayPauseAction();
 
+    QString identifier() const { return "playPause"; }
     QString icon() const;
     QString title() const;
+    UseCases useCases() const;
 
     Q_INVOKABLE void execute();
 };
