@@ -51,7 +51,9 @@ Dialog {
             }
 
             ComboBox {
+                id: disconnectedOne
                 label: qsTr("Left")
+                currentIndex: disconnectedActions.indexOf(settings.getAction("coverDisconnectedOne", "addHost"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.disconnectedActions
@@ -63,7 +65,9 @@ Dialog {
             }
 
             ComboBox {
+                id: disconnectedTwo
                 label: qsTr("Right")
+                currentIndex: disconnectedActions.indexOf(settings.getAction("coverDisconnectedTwo", "changeHost"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.disconnectedActions
@@ -79,7 +83,9 @@ Dialog {
             }
 
             ComboBox {
+                id: connectedOne
                 label: qsTr("Left")
+                currentIndex: connectedActions.indexOf(settings.getAction("coverConnectedOne", "musicLibrary"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.connectedActions
@@ -91,7 +97,9 @@ Dialog {
             }
 
             ComboBox {
+                id: connectedTwo
                 label: qsTr("Right")
+                currentIndex: connectedActions.indexOf(settings.getAction("coverConnectedTwo", "videoLibrary"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.connectedActions
@@ -107,7 +115,9 @@ Dialog {
             }
 
             ComboBox {
+                id: playingOne
                 label: qsTr("Left")
+                currentIndex: playingActions.indexOf(settings.getAction("coverPlayingOne", "playPause"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.playingActions
@@ -119,7 +129,9 @@ Dialog {
             }
 
             ComboBox {
+                id: playingTwo
                 label: qsTr("Right")
+                currentIndex: playingActions.indexOf(settings.getAction("coverPlayingTwo", "stop"))
                 menu: ContextMenu {
                     Repeater {
                         model: dialog.playingActions
@@ -130,5 +142,14 @@ Dialog {
                 }
             }
         }
+    }
+
+    onAccepted: {
+        settings.bindAction("coverDisconnectedOne", disconnectedActions.get(disconnectedOne.currentIndex).identifier);
+        settings.bindAction("coverDisconnectedTwo", disconnectedActions.get(disconnectedTwo.currentIndex).identifier);
+        settings.bindAction("coverConnectedOne", connectedActions.get(connectedOne.currentIndex).identifier);
+        settings.bindAction("coverConnectedTwo", connectedActions.get(connectedTwo.currentIndex).identifier);
+        settings.bindAction("coverPlayingOne", playingActions.get(playingOne.currentIndex).identifier);
+        settings.bindAction("coverPlayingTwo", playingActions.get(playingTwo.currentIndex).identifier);
     }
 }

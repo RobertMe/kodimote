@@ -36,6 +36,8 @@ public:
 
     Q_INVOKABLE ActionModel *list(Action::UseCase useCases);
 
+    int indexOf(const QString &identifier) const;
+
 signals:
     void openPage(QString pageName);
 

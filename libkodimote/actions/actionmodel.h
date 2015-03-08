@@ -11,6 +11,9 @@ class ActionModel : public QSortFilterProxyModel
 public:
     explicit ActionModel(Action::UseCases useCases, QObject *parent = 0);
 
+    Q_INVOKABLE Action *get(int index) const;
+    Q_INVOKABLE int indexOf(const QString &identifier) const;
+
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 

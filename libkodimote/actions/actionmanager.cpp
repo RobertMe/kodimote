@@ -105,13 +105,13 @@ Action *ActionManager::get(const QString &identifier) const
         }
     }
 
-    return NULL;
+    return 0;
 }
 
 Action *ActionManager::get(int row) const
 {
     if (row < 0 || row >= m_actions.count()) {
-        return NULL;
+        return 0;
     }
 
     return m_actions[row];
@@ -122,4 +122,16 @@ ActionModel *ActionManager::list(Action::UseCase useCases)
     ActionModel *model = new ActionModel(useCases);
     model->setSourceModel(this);
     return model;
+}
+
+int ActionManager::indexOf(const QString &identifier) const
+{
+    int count = m_actions.count();
+    for (int i = 0; i < count; i++) {
+        if (m_actions.at(i)->identifier() == identifier) {
+            return i;
+        }
+    }
+
+    return -1;
 }
