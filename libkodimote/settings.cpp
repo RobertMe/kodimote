@@ -258,3 +258,17 @@ void Settings::setShowWatchedTvShows(bool show)
     settings.setValue("ShowWatchedTvShows", show);
     emit showWatchedTvShowsChanged();
 }
+
+QString Settings::getAction(const QString &setting, const QString &defaultValue) const
+{
+    QSettings settings;
+    settings.beginGroup("actions");
+    return settings.value(setting, defaultValue).toString();
+}
+
+void Settings::bindAction(const QString &setting, const QString identifier)
+{
+    QSettings settings;
+    settings.beginGroup("actions");
+    settings.setValue(setting, identifier);
+}

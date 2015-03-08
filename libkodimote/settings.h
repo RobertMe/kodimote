@@ -110,6 +110,9 @@ public:
     bool showWatchedTvShows() const;
     void setShowWatchedTvShows(bool show);
 
+    Q_INVOKABLE QString getAction(const QString &setting, const QString &defaultValue = QString()) const;
+    Q_INVOKABLE void bindAction(const QString &setting, const QString identifier);
+
 signals:
     void themeInvertedChanged();
     void useThumbnailsChanged();
