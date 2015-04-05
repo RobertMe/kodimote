@@ -29,35 +29,6 @@ CoverBackground {
     property QtObject currentItem: player ? player.currentItem : null
     property bool hasThumbnail: cover.currentItem && cover.currentItem.thumbnail.length
 
-    function addHost() {
-        pageStack.clear();
-        pageStack.push(appWindow.initialPage);
-        pageStack.currentPage.showConnect(PageStackAction.Immediate);
-        pageStack.currentPage.addHost();
-        appWindow.activate();
-    }
-
-    function browseMusic() {
-        pageStack.clear();
-        pageStack.push(appWindow.initialPage);
-        pageStack.currentPage.browse("music");
-        appWindow.activate();
-    }
-
-    function browseVideo() {
-        pageStack.clear();
-        pageStack.push(appWindow.initialPage);
-        pageStack.currentPage.browse("video");
-        appWindow.activate();
-    }
-
-    function connectToHost() {
-        pageStack.clear();
-        pageStack.push(appWindow.initialPage);
-        pageStack.currentPage.showConnect();
-        appWindow.activate();
-    }
-
     function playPause() {
         cover.player.playPause();
     }
@@ -102,14 +73,18 @@ CoverBackground {
     }
 
     CoverActionList {
-        id: actions
-
         CoverAction {
             id: leftAction
+            property QtObject action
+            onTriggered: action.execute()
+            iconSource: icons.get(action.icon)
         }
 
         CoverAction {
             id: rightAction
+            property QtObject action
+            onTriggered: action.execute()
+            iconSource: icons.get(action.icon)
         }
     }
 
@@ -122,13 +97,11 @@ CoverBackground {
             }
             PropertyChanges {
                 target: leftAction
-                iconSource: "image://theme/icon-cover-" + (cover.player && cover.player.state === "playing" ? "pause" : "play")
-                onTriggered: playPause()
+                action: actions.get(settings.getAction("coverPlayingOne", "playPause"))
             }
             PropertyChanges {
                 target: rightAction
-                iconSource: "../icons/icon-cover-stop.png"
-                onTriggered: stop()
+                action: actions.get(settings.getAction("coverPlayingTwo", "stop"))
             }
         },
         State {
@@ -139,13 +112,11 @@ CoverBackground {
             }
             PropertyChanges {
                 target: leftAction
-                iconSource: "image://theme/icon-l-music"
-                onTriggered: browseMusic()
+                action: actions.get(settings.getAction("coverConnectedOne", "musicLibrary"))
             }
             PropertyChanges {
                 target: rightAction
-                iconSource: "image://theme/icon-l-video"
-                onTriggered: browseVideo()
+                action: actions.get(settings.getAction("coverConnectedTwo", "videoLibrary"))
             }
         },
         State {
@@ -157,13 +128,11 @@ CoverBackground {
             }
             PropertyChanges {
                 target: leftAction
-                iconSource: "image://theme/icon-cover-new"
-                onTriggered: addHost()
+                action: actions.get(settings.getAction("coverDisconnectedOne", "addHost"))
             }
             PropertyChanges {
                 target: rightAction
-                iconSource: "image://theme/icon-cover-search"
-                onTriggered: connectToHost()
+                action: actions.get(settings.getAction("coverDisconnectedTwo", "changeHost"))
             }
         }
     ]

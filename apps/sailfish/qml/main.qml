@@ -228,7 +228,21 @@ ApplicationWindow
     Connections {
         target: actions
         onOpenPage: {
-            console.log("openPage" + pageName);
+            if (pageName === "changeHost" || pageName === "addHost") {
+                pageStack.clear();
+                pageStack.push(appWindow.initialPage, undefined);
+                pageStack.currentPage.showConnect(PageStackAction.Immediate);
+                if (pageName === "addHost") {
+                    pageStack.currentPage.addHost();
+                }
+                appWindow.activate();
+            }
+        }
+        onOpenBrowser: {
+            pageStack.clear();
+            pageStack.push(appWindow.initialPage);
+            pageStack.currentPage.openBrowser(model);
+            appWindow.activate();
         }
     }
 }

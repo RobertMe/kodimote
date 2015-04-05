@@ -54,6 +54,13 @@ Page {
         pageStack.push("ConnectionDialog.qml", undefined, operationType);
     }
 
+    function openBrowser(model) {
+        var browser = pageStack.push("BrowserPage.qml", {model: model});
+        browser.home.connect(function() {
+            pageStack.pop(mainPage);
+        });
+    }
+
     function browse(target) {
         var menuModel = null;
 
@@ -77,10 +84,7 @@ Page {
 
 
         console.log("setting model: " + newModel);
-        var browser = pageStack.push("BrowserPage.qml", {model: newModel});
-        browser.home.connect(function() {
-            pageStack.pop(mainPage);
-        });
+        openBrowser(newModel);
     }
 
     SilicaListView {
