@@ -20,10 +20,12 @@ contains(STORE, harbour) {
 
 SOURCES += \
     src/main.cpp \
-    src/sailfishhelper.cpp
+    src/sailfishhelper.cpp \
+    src/iconmanager.cpp
 
 HEADERS += \
-    src/sailfishhelper.h
+    src/sailfishhelper.h \
+    src/iconmanager.h
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \

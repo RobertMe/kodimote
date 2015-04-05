@@ -34,6 +34,7 @@
 #include "libkodimote/networkaccessmanagerfactory.h"
 #include "libkodimote/mpris2/mpriscontroller.h"
 #include "sailfishhelper.h"
+#include "iconmanager.h"
 
 #include "libkodimote/actions/actionmanager.h"
 
@@ -70,6 +71,7 @@ int main(int argc, char *argv[])
 
     Settings settings;
     ActionManager actions;
+    IconManager icons;
 
     SailfishHelper helper(view, &settings);
 
@@ -82,6 +84,7 @@ int main(int argc, char *argv[])
     view->engine()->rootContext()->setContextProperty("kodi", Kodi::instance());
     view->engine()->rootContext()->setContextProperty("settings", &settings);
     view->engine()->rootContext()->setContextProperty("actions", &actions);
+    view->engine()->rootContext()->setContextProperty("icons", &icons);
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
 
     view->show();
