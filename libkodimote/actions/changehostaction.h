@@ -7,7 +7,7 @@ class ChangeHostAction : public Action
 {
     Q_OBJECT
 public:
-    Q_INVOKABLE explicit ChangeHostAction(ActionManager *manager);
+    explicit ChangeHostAction(ActionManager *manager);
 
     ~ChangeHostAction();
 

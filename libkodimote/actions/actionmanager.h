@@ -7,6 +7,7 @@
 #include "action.h"
 
 class ActionModel;
+class KodiModel;
 
 class ActionManager : public QAbstractItemModel
 {
@@ -38,8 +39,11 @@ public:
 
     int indexOf(const QString &identifier) const;
 
+    void tryOpenBrowser(KodiModel *model);
+
 signals:
     void openPage(QString pageName);
+    void openBrowser(KodiModel *model);
 
 private:
     QList<Action*> m_actions;

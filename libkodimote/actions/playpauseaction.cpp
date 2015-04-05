@@ -1,22 +1,21 @@
 #include "playpauseaction.h"
 
-#include "actionmanager.h"
-
 #include "../kodi.h"
 #include "../player.h"
+#include "../audioplayer.h"
+#include "../videoplayer.h"
 
 PlayPauseAction::PlayPauseAction(ActionManager *manager) :
     Action(manager)
 {
-}
-
-PlayPauseAction::~PlayPauseAction()
-{
+    connect(Kodi::instance()->audioPlayer(), SIGNAL(stateChanged()), this, SIGNAL(iconChanged()));
+    connect(Kodi::instance()->videoPlayer(), SIGNAL(stateChanged()), this, SIGNAL(iconChanged()));
+    connect(Kodi::instance(), SIGNAL(activePlayerChanged()), this, SIGNAL(iconChanged()));
 }
 
 QString PlayPauseAction::icon() const
 {
-    return "play";
+    return Kodi::instance()->activePlayer()->state() == "playing" ? "pause" : "play";
 }
 
 QString PlayPauseAction::title() const

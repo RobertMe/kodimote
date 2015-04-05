@@ -90,7 +90,11 @@ SOURCES +=  kodi.cpp \
             actions/action.cpp \
             actions/changehostaction.cpp \
             actions/actionmodel.cpp \
-            actions/playpauseaction.cpp
+            actions/playpauseaction.cpp \
+            actions/addhostaction.cpp \
+            actions/openaudiolibraryaction.cpp \
+            actions/openvideolibraryaction.cpp \
+            actions/stopplaybackaction.cpp
 
 HEADERS += libkodimote_global.h \
            kodi.h \
@@ -162,4 +166,8 @@ HEADERS += libkodimote_global.h \
            actions/action.h \
            actions/changehostaction.h \
            actions/actionmodel.h \
-           actions/playpauseaction.h
+           actions/playpauseaction.h \
+           actions/addhostaction.h \
+           actions/openaudiolibraryaction.h \
+           actions/openvideolibraryaction.h \
+           actions/stopplaybackaction.h

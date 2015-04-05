@@ -7,9 +7,7 @@ class PlayPauseAction : public Action
 {
     Q_OBJECT
 public:
-    Q_INVOKABLE explicit PlayPauseAction(ActionManager *manager);
-
-    ~PlayPauseAction();
+    explicit PlayPauseAction(ActionManager *manager);
 
     QString identifier() const { return "playPause"; }
     QString icon() const;

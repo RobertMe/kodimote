@@ -8,9 +8,15 @@
 #include <QtDeclarative>
 #endif
 
+#include "kodimodel.h"
 #include "actionmodel.h"
 #include "changehostaction.h"
 #include "playpauseaction.h"
+#include "stopplaybackaction.h"
+#include "addhostaction.h"
+#include "openaudiolibraryaction.h"
+#include "openvideolibraryaction.h"
+
 
 ActionManager::ActionManager(QObject *parent) :
     QAbstractItemModel(parent)
@@ -33,7 +39,11 @@ ActionManager::ActionManager(QObject *parent) :
 
     m_actions
             << new ChangeHostAction(this)
-            << new PlayPauseAction(this);
+            << new AddHostAction(this)
+            << new OpenAudioLibraryAction(this)
+            << new OpenVideoLibraryAction(this)
+            << new PlayPauseAction(this)
+            << new StopPlaybackAction(this);
 }
 
 QVariant ActionManager::data(const QModelIndex &index, int role) const
@@ -134,4 +144,13 @@ int ActionManager::indexOf(const QString &identifier) const
     }
 
     return -1;
+}
+
+void ActionManager::tryOpenBrowser(KodiModel *model)
+{
+    if (receivers(SIGNAL(openBrowser(KodiModel*)))) {
+        emit openBrowser(model);
+    } else {
+        model->deleteLater();
+    }
 }
