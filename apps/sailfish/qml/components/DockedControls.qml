@@ -35,7 +35,14 @@ DockedPanel {
     contentHeight: height
 
     onPlayerChanged: {
-        open = player;
+        if (player) {
+            _opened = true;
+            if (!hideTemporary) {
+                show(true);
+            }
+        } else {
+            hide(true);
+        }
     }
 
     onHideTemporaryChanged: {
@@ -43,7 +50,7 @@ DockedPanel {
             _opened = open;
             hide(true);
         } else {
-            if (_opened) {
+            if (_opened && player) {
                 show(true);
             }
         }
@@ -67,8 +74,8 @@ DockedPanel {
         onCurrentPageChanged: {
             var isDialog = pageStack.currentPage.hasOwnProperty('__silica_dialog');
             if (_dialogOpen) {
-                if (!isDialog && _opened) {
-                        show();
+                if (!isDialog && _opened && player) {
+                    show();
                 }
             } else if (isDialog) {
                 _dialogOpen = true;

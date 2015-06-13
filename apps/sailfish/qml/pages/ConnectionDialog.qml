@@ -54,6 +54,7 @@ Dialog {
         anchors.fill: parent
         model: kodi.hostModel()
         highlightFollowsCurrentItem: true
+        currentIndex: model.indexOf(kodi.connectedHost)
 
         header: DialogHeader {
             id: header
@@ -130,7 +131,7 @@ Dialog {
                     rightMargin: Theme.paddingLarge
                     verticalCenter: parent.verticalCenter
                 }
-                elide: Text.ElideRight
+                truncationMode: TruncationMode.Fade
                 font.pixelSize: Theme.fontSizeLarge
             }
 

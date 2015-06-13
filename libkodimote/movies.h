@@ -33,7 +33,7 @@ public:
     ~Movies();
 
     KodiModel *enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     QString title() const;
@@ -45,7 +45,9 @@ public:
     Q_INVOKABLE virtual void download(int index, const QString &path);
 
     ThumbnailFormat thumbnailFormat() const { return ThumbnailFormatPortrait; }
+    MediaFormat mediaFormat() const { return MediaFormatVideo; }
     bool allowWatchedFilter() { return true; }
+    QString watchedFilterSetting() { return "showWatchedMovies"; }
 
 public slots:
     void refresh();

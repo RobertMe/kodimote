@@ -43,27 +43,13 @@ void MusicVideos::receivedAnnouncement(const QVariantMap &map)
 
     QVariantMap data = map.value("params").toMap().value("data").toMap();
 
-    QVariant playcount = data.value("playcount");
-    if(!playcount.isValid() || playcount.toInt() < 0) {
-        return;
-    }
-
     QString type = data.value("item").toMap().value("type").toString();
     int id = data.value("item").toMap().value("id").toInt();
     if(type != "musicvideo" || !m_idIndexMapping.contains(id)) {
         return;
     }
 
-    int i = m_idIndexMapping.value(id);
-    LibraryItem *item = qobject_cast<LibraryItem*>(m_list.at(i));
-
-    if(playcount.toInt() == item->playcount()) {
-        return;
-    }
-
-
-    item->setPlaycount(playcount.toInt());
-    dataChanged(index(i, 0, QModelIndex()), index(i, 0, QModelIndex()));
+    refresh();
 }
 
 void MusicVideos::refresh()
@@ -73,6 +59,7 @@ void MusicVideos::refresh()
     properties.append("fanart");
     properties.append("playcount");
     properties.append("year");
+    properties.append("resume");
     params.insert("properties", properties);
 
 
@@ -138,6 +125,7 @@ void MusicVideos::listReceived(const QVariantMap &rsp)
         item->setFileType("file");
         item->setPlayable(true);
         item->setYear(itemMap.value("year").toString());
+        item->setResume(itemMap.value("resume").toMap().value("position").toInt());
         list.append(item);
         m_idIndexMapping.insert(item->musicvideoId(), index++);
     }
@@ -168,14 +156,11 @@ KodiModel *MusicVideos::enterItem(int index)
     return 0;
 }
 
-void MusicVideos::playItem(int index)
+void MusicVideos::playItem(int index, bool resume)
 {
-    qDebug() << "should play item" << index << "musicvideoid is" << m_list.at(index)->data(RoleMusicVideoId).toInt();
-    Kodi::instance()->videoPlayer()->playlist()->clear();
     VideoPlaylistItem item;
     item.setMusicVideoId(m_list.at(index)->data(RoleMusicVideoId).toInt());
-    Kodi::instance()->videoPlayer()->playlist()->addItems(item);
-    Kodi::instance()->videoPlayer()->playItem(0);
+    Kodi::instance()->videoPlayer()->open(item, resume);
 }
 
 void MusicVideos::addToPlaylist(int row)

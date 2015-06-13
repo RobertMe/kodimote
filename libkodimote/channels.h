@@ -32,13 +32,14 @@ public:
     QString title() const;
     void refresh();
     KodiModel* enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     virtual QHash<int, QByteArray> roleNames() const;
     virtual QVariant data(const QModelIndex &index, int role) const;
 
     ThumbnailFormat thumbnailFormat() const { return ThumbnailFormat43; }
+    MediaFormat mediaFormat() const { return MediaFormatVideo; }
     Q_INVOKABLE void fetchItemDetails(int index);
     Q_INVOKABLE bool hasDetails() { return true; }
 

@@ -26,5 +26,8 @@
         <file>qml/components/TimePicker.qml</file>
         <file>qml/components/XIcon.qml</file>
         <file>qml/components/ProfileSelectionDialog.qml</file>
+        <file>qml/components/ResumeDialog.qml</file>
+        <file>qml/components/ListItemWithActions.qml</file>
+        <file>qml/components/ListItemWithActionsCheckBox.qml</file>
     </qresource>
 </RCC>

@@ -39,6 +39,7 @@ Player::Player(PlayerType type, QObject *parent) :
     m_lastPlaytimeUpdate(QDateTime::currentDateTime()),
     m_currentItem(new LibraryItem(this)),
     m_seeking(false),
+    m_timerActivated(false),
     m_shuffle(false),
     m_repeat(RepeatNone),
     m_currentSubtitle(-1),
@@ -49,36 +50,6 @@ Player::Player(PlayerType type, QObject *parent) :
 
     m_playtimeTimer.setInterval(1000);
     connect(&m_playtimeTimer, SIGNAL(timeout()), SLOT(updatePlaytime()));
-}
-
-void Player::getSpeed()
-{
-    QVariantMap params;
-    params.insert("playerid", playerId());
-    QVariantList properties;
-    properties.append("speed");
-    params.insert("properties", properties);
-    KodiConnection::sendCommand("Player.GetProperties", params, this, "speedReceived");
-}
-
-void Player::getPlaytime()
-{
-    QVariantMap params;
-    params.insert("playerid", playerId());
-    QVariantList props;
-    props.append("time");
-    params.insert("properties", props);
-    KodiConnection::sendCommand("Player.GetProperties", params, this, "playtimeReceived");
-}
-
-void Player::getPosition()
-{
-    QVariantMap params;
-    params.insert("playerid", playerId());
-    QVariantList props;
-    props.append("position");
-    params.insert("properties", props);
-    KodiConnection::sendCommand("Player.GetProperties", params, this, "positionReceived");
 }
 
 void Player::getRepeatShuffle()
@@ -155,6 +126,7 @@ void Player::refresh()
     QVariantList props;
     props.append("speed");
     props.append("time");
+    props.append("totaltime");
     props.append("position");
     props.append("repeat");
     props.append("shuffled");
@@ -262,18 +234,10 @@ void Player::receivedAnnouncement(const QVariantMap &map)
     } else if(map.value("method").toString() == "Player.OnPlay") {
         m_state = "playing";
         emit stateChanged();
-        refresh();
+        //this has to be delayed, otherwise returned times aren't correct (yet)
+        QTimer::singleShot(100, this, SLOT(refresh()));
         m_speed = data.value("player").toMap().value("speed").toInt();
-        qDebug() << "set speed to" << m_speed;
         emit speedChanged();
-        getPosition();
-        getPlaytime();
-        getCurrentItemDetails();
-        m_lastPlaytimeUpdate = QDateTime::currentDateTime();
-        if(m_timerActivated) {
-            m_playtimeTimer.start();
-        }
-        playlist()->refresh();
     } else if(map.value("method").toString() == "Player.OnSeek") {
         updatePlaytime(data.value("player").toMap().value("time").toMap());
         m_seeking = false;
@@ -282,35 +246,6 @@ void Player::receivedAnnouncement(const QVariantMap &map)
         m_speed = data.value("player").toMap().value("speed").toInt();
         emit speedChanged();
     }
-}
-
-void Player::speedReceived(const QVariantMap &rsp)
-{
-    m_speed = rsp.value("result").toMap().value("speed").toInt();
-    koDebug(XDAREA_PLAYER) << "got player speed" << m_speed;
-    emit speedChanged();
-
-    if(m_speed == 0) {
-        m_state = "paused";
-    } else {
-        m_state = "playing";
-    }
-    emit stateChanged();
-}
-
-void Player::playtimeReceived(const QVariantMap &rsp)
-{
-    koDebug(XDAREA_PLAYER) << "Got playtime response" << rsp;
-    updatePlaytime(rsp.value("result").toMap().value("time").toMap());
-    if (m_timerActivated && !m_playtimeTimer.isActive()) {
-        m_playtimeTimer.start();
-    }
-}
-
-void Player::positionReceived(const QVariantMap &rsp)
-{
-    koDebug(XDAREA_PLAYER) << "Got position response" << rsp;
-    playlist()->setCurrentIndex(rsp.value("result").toMap().value("position").toInt());
 }
 
 void Player::repeatShuffleReceived(const QVariantMap &rsp)
@@ -373,11 +308,27 @@ void Player::mediaPropsReceived(const QVariantMap &rsp)
 
 void Player::refreshReceived(const QVariantMap &rsp)
 {
-    speedReceived(rsp);
-    playtimeReceived(rsp);
-    positionReceived(rsp);
     repeatShuffleReceived(rsp);
     mediaPropsReceived(rsp);
+
+    QVariantMap result = rsp.value("result").toMap();
+    m_totalTime = parseTime(result.value("totaltime").toMap());
+
+    m_speed = result.value("speed").toInt();
+
+    if(m_speed == 0) {
+        m_state = "paused";
+    } else {
+        m_state = "playing";
+    }
+    emit stateChanged();
+
+    updatePlaytime(result.value("time").toMap());
+    if (m_timerActivated && !m_playtimeTimer.isActive()) {
+        m_playtimeTimer.start();
+    }
+
+    playlist()->setCurrentIndex(result.value("position").toInt());
 }
 
 void Player::detailsReceived(const QVariantMap &rsp)
@@ -392,6 +343,12 @@ void Player::detailsReceived(const QVariantMap &rsp)
 
     int id = itemMap.value("id").toInt();
     QString type = itemMap.value("type").toString();
+    if (type == "unknown") {
+        if (itemMap.value("file").toString().startsWith("pvr://")) {
+            type = "recording";
+        }
+    }
+
     if(type == "episode") {
         m_currentItem->setEpisodeId(id);
     } else if(type == "movie") {
@@ -406,17 +363,19 @@ void Player::detailsReceived(const QVariantMap &rsp)
         m_currentItem->setArtistId(id);
     } else if(type == "channel") {
         m_currentItem->setChannelId(id);
+    } else if(type == "recording") {
+        m_currentItem->setRecordingId(id);
     }
 
     m_currentItem->setType(type);
 
 
     m_currentItem->setTitle(itemMap.value("label").toString());
-    if(itemMap.value("type").toString() == "song") {
-        m_currentItem->setSubtitle(itemMap.value("artist").toString());
-    } else if(itemMap.value("type").toString() == "episode") {
+    if(type == "song") {
+        m_currentItem->setSubtitle(itemMap.value("artist").toStringList().join("/"));
+    } else if(type == "episode") {
         m_currentItem->setSubtitle(itemMap.value("showtitle").toString());
-    } else if(itemMap.value("type").toString() == "channel") {
+    } else if(type == "channel") {
         m_currentItem->setTitle(itemMap.value("title").toString());
         m_currentItem->setSubtitle(itemMap.value("label").toString());
     }
@@ -473,17 +432,32 @@ double Player::percentage() const
     return m_percentage;
 }
 
-QString Player::time() const
+QTime Player::time() const
 {
-    if(m_currentItem) {
-        QTime time = QTime(0, 0, 0).addMSecs(m_lastPlaytime);
-        if(m_currentItem->duration().hour() > 0) {
-            return time.toString("hh:mm:ss");
-        } else {
-            return time.toString("mm:ss");
-        }
+    QTime time(0, 0, 0);
+    if (m_currentItem) {
+        time = time.addMSecs(m_lastPlaytime);
     }
-    return "00:00";
+
+    return time;
+}
+
+QString Player::timeString() const
+{
+    QString format = m_currentItem && m_currentItem->duration().hour() > 0
+            ? "hh:mm:ss"
+            : "mm:ss";
+    return time().toString(format);
+}
+
+QTime Player::totalTime() const
+{
+    return m_totalTime;
+}
+
+QString Player::totalTimeString() const
+{
+    return formatTime(m_totalTime);
 }
 
 void Player::updatePlaytime()
@@ -493,7 +467,7 @@ void Player::updatePlaytime()
     }
 
     //use milliseconds, otherwise it tends to skip a sec. once in a while
-    int duration = QTime(0, 0, 0).msecsTo(m_currentItem->duration());
+    int duration = QTime(0, 0, 0).msecsTo(m_totalTime);
     QDateTime currentTime = QDateTime::currentDateTime();
     int elapsedMSeconds = m_lastPlaytimeUpdate.msecsTo(currentTime);
     m_lastPlaytime += elapsedMSeconds * m_speed;
@@ -507,20 +481,13 @@ void Player::updatePlaytime()
 void Player::updatePlaytime(const QVariantMap &timeMap)
 {
     QDateTime currentTime = QDateTime::currentDateTime();
-    QTime time;
-    int hours = timeMap.value("hours").toInt();
-    int minutes = timeMap.value("minutes").toInt();
-    int seconds = timeMap.value("seconds").toInt();
-    int mseconds = timeMap.value("milliseconds").toInt();
-    time.setHMS(hours, minutes, seconds, mseconds);
+    QTime time = parseTime(timeMap);
     m_lastPlaytime = QTime(0, 0, 0).msecsTo(time);
     m_lastPlaytimeUpdate = currentTime;
-    if(playlist()->currentItem()) {
-        int duration = QTime(0, 0, 0).msecsTo(playlist()->currentItem()->duration());
-        m_percentage = (double)m_lastPlaytime / duration * 100;
-        emit percentageChanged();
-    }
+    int duration = QTime(0, 0, 0).msecsTo(m_totalTime);
+    m_percentage = (double)m_lastPlaytime / duration * 100;
 
+    emit percentageChanged();
     emit timeChanged();
 }
 
@@ -531,6 +498,16 @@ void Player::playItem(int index)
     playlistid.insert("playlistid", playlist()->playlistId());
     playlistid.insert("position", index);
     params.insert("item", playlistid);
+    KodiConnection::sendCommand("Player.Open", params);
+}
+
+void Player::open(const PlaylistItem &item, bool resume)
+{
+    QVariantMap params;
+    params.insert("item", item.toMap());
+    QVariantMap options;
+    options.insert("resume", resume);
+    params.insert("options", options);
     KodiConnection::sendCommand("Player.Open", params);
 }
 
@@ -655,12 +632,37 @@ void Player::setTimerActive(bool active)
 
 void Player::seek(double percentage)
 {
-    if(m_seeking && percentage != m_percentage) {
+    if(m_seeking) {
         return;
     }
+
+    QTime position = calculateTime(percentage);
     QVariantMap params;
     params.insert("playerid", playerId());
-    params.insert("value", percentage);
+    QVariantMap time;
+    time.insert("hours", position.hour());
+    time.insert("minutes", position.minute());
+    time.insert("seconds", position.second());
+    params.insert("value", time);
+
+    m_seeking = true;
+    KodiConnection::sendCommand("Player.Seek", params);
+}
+
+void Player::seek(QTime time)
+{
+    if (m_seeking) {
+        return;
+    }
+
+    QVariantMap params;
+    params.insert("playerid", playerId());
+    QVariantMap position;
+    position.insert("hours", time.hour());
+    position.insert("minutes", time.minute());
+    position.insert("hours", time.hour());
+    position.insert("milliseconds", time.msec());
+    params.insert("value", position);
 
     m_seeking = true;
     KodiConnection::sendCommand("Player.Seek", params);
@@ -669,4 +671,36 @@ void Player::seek(double percentage)
 LibraryItem *Player::currentItem() const
 {
     return m_currentItem;
+}
+
+QTime Player::parseTime(const QVariantMap &timeMap) const
+{
+    QTime time;
+    int hours = timeMap.value("hours").toInt();
+    int minutes = timeMap.value("minutes").toInt();
+    int seconds = timeMap.value("seconds").toInt();
+    int mseconds = timeMap.value("milliseconds").toInt();
+    time.setHMS(hours, minutes, seconds, mseconds);
+
+    return time;
+}
+
+QString Player::formatTime(const QTime &time) const
+{
+    if (time.hour() > 0) {
+        return time.toString("hh:mm:ss");
+    } else {
+        return time.toString("mm:ss");
+    }
+}
+
+QTime Player::calculateTime(double percentage) const
+{
+    int milliSeconds = QTime(0, 0, 0).msecsTo(m_totalTime) * percentage / 100;
+    return QTime(0, 0, 0).addMSecs(milliSeconds);
+}
+
+QString Player::calculateTimeString(double percentage) const
+{
+    return formatTime(calculateTime(percentage));
 }

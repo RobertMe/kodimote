@@ -32,7 +32,7 @@ public:
     explicit VideoLibrary(KodiModel *parent = 0);
 
     KodiModel *enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     QString title() const;
@@ -40,6 +40,7 @@ public:
     bool allowSearch();
 
     ThumbnailFormat thumbnailFormat() const { return ThumbnailFormatNone; }
+    MediaFormat mediaFormat() const { return MediaFormatVideo; }
 
 public slots:
     void scanForContent();

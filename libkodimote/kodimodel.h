@@ -31,13 +31,16 @@ class KodiModel : public QAbstractItemModel
     Q_OBJECT
     Q_ENUMS(ThumbnailFormat)
     Q_ENUMS(LockMode)
+    Q_ENUMS(MediaFormat)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
     Q_PROPERTY(int count READ rowCount NOTIFY layoutChanged)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
     Q_PROPERTY(bool ignoreArticle READ ignoreArticle WRITE setIgnoreArticle NOTIFY ignoreArticleChanged)
     Q_PROPERTY(ThumbnailFormat thumbnailFormat READ thumbnailFormat NOTIFY thumbnailFormatChanged)
+    Q_PROPERTY(MediaFormat mediaFormat READ mediaFormat CONSTANT)
     Q_PROPERTY(bool allowSearch READ allowSearch NOTIFY allowSearchChanged)
     Q_PROPERTY(bool allowWatchedFilter READ allowWatchedFilter NOTIFY allowWatchedFilterChanged)
+    Q_PROPERTY(QString watchedFilterSetting READ watchedFilterSetting NOTIFY watchedFilterSettingChanged)
 
 public:
     enum Roles {
@@ -83,6 +86,8 @@ public:
         RoleComment,
         RolePlaycount,
         RoleCast,
+        RoleResume,
+        RoleResumeString,
         RolePlayingState,
         RoleLockMode
     };
@@ -93,6 +98,13 @@ public:
         ThumbnailFormatLandscape,
         ThumbnailFormatPortrait,
         ThumbnailFormat43
+    };
+
+    enum MediaFormat {
+        MediaFormatUnknown,
+        MediaFormatAudio,
+        MediaFormatVideo,
+        MediaFormatPictures
     };
 
     enum ItemId {
@@ -138,8 +150,10 @@ public:
     void setIgnoreArticle(bool ignoreArticle);
 
     virtual ThumbnailFormat thumbnailFormat() const { return ThumbnailFormatSquare; }
+    virtual MediaFormat mediaFormat() const { return MediaFormatUnknown; }
     virtual bool allowSearch() { return true; }
     virtual bool allowWatchedFilter() { return false; }
+    virtual QString watchedFilterSetting() { return QString(); }
 
     Q_INVOKABLE void imageFetched(int id);
 public slots:
@@ -153,6 +167,7 @@ signals:
     void thumbnailFormatChanged();
     void allowSearchChanged();
     void allowWatchedFilterChanged();
+    void watchedFilterSettingChanged();
 
 protected:
     KodiModel *m_parentModel;

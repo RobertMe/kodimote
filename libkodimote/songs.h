@@ -33,7 +33,7 @@ public:
     ~Songs();
 
     KodiModel* enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     QString title() const;
@@ -41,6 +41,8 @@ public:
     Q_INVOKABLE bool hasDetails() { return true; }
 
     Q_INVOKABLE void download(int index, const QString &path);
+
+    MediaFormat mediaFormat() const { return MediaFormatAudio; }
 
 public slots:
     void refresh() { refresh(0, 200); }

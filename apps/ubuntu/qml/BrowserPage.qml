@@ -18,9 +18,9 @@
  *                                                                           *
  ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.1
+import Ubuntu.Components 1.2
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import Kodi 1.0
@@ -45,6 +45,12 @@ KodiPage {
     Component.onCompleted: {
         console.log("BrowserPage: setting model " + model)
         //filterModel.model = model
+        var setting = model.watchedFilterSetting;
+        if (setting) {
+            settings[setting + 'Changed'].connect(function() {
+                filterModel.hideWatched = !settings[setting];
+            });
+        }
     }
 
     Component.onDestruction: {
@@ -98,6 +104,14 @@ KodiPage {
         model: root.model
         filterCaseSensitivity: Qt.CaseInsensitive
         filter: searchTextField.text
+        hideWatched: model.watchedFilterSetting ? !settings[model.watchedFilterSetting] : false
+
+        onHideWatchedChanged: {
+            var setting = model.watchedFilterSetting;
+            if (setting) {
+                settings[setting] = !hideWatched;
+            }
+        }
     }
 
     Item {
@@ -206,6 +220,20 @@ KodiPage {
                 UbuntuNumberAnimation {}
             }
 
+            function playItem() {
+                if (resume == 0) {
+                    root.model.playItem(filterModel.mapToSourceIndex(index));
+                } else {
+                    var popup = PopupUtils.open(Qt.resolvedUrl("components/ResumeDialog.qml"), delegateItem, {item: model });
+                    popup.accepted.connect(function() {
+                        root.model.playItem(filterModel.mapToSourceIndex(index), true);
+                    })
+                    popup.rejected.connect(function() {
+                        root.model.playItem(filterModel.mapToSourceIndex(index));
+                    })
+                }
+            }
+
             states: [
                 State {
                     name: "expanded"; when: expanded
@@ -243,8 +271,7 @@ KodiPage {
                         target: contentLoader.item
 
                         onPlayItem: {
-                            print("playItem()!")
-                            root.model.playItem(filterModel.mapToSourceIndex(index))
+                                delegateItem.playItem()
                         }
 
                         onAddToPlaylist: {
@@ -255,22 +282,46 @@ KodiPage {
                             root.model.download(filterModel.mapToSourceIndex(index), "/home/user/MyDocs/");
                         }
                     }
-
                 }
             }
 
-
-            Base {
+            ListItemWithActions {
                 id: collapsedItem
                 height: listView.itemHeight
                 width: listView.width
+                color: "transparent"
+                triggerActionOnMouseRelease: true
+                opacity: delegateItem.expanded ? 0.6 : 1
+
+                rightSideActions: [
+                    Action {
+                        iconName: "media-playback-start"
+                        visible: model.playable
+                        onTriggered: delegateItem.playItem();
+                    },
+                    Action {
+                        iconName: "add-to-playlist"
+                        visible: model.playable
+                        onTriggered: root.model.addToPlaylist(filterModel.mapToSourceIndex(index))
+                    },
+                    Action {
+                        iconName: "info"
+                        visible: root.model.hasDetails()
+                        onTriggered: {
+                            root.model.fetchItemDetails(filterModel.mapToSourceIndex(index))
+                            delegateItem.expanded = true
+                        }
+                    }
+
+                ]
+
                 anchors {
                     left: parent.left
                     right: parent.right
                     bottom: parent.bottom
                 }
 
-                Row {
+                RowLayout {
                     width: parent.width
                     height: parent.height
                     spacing: units.gu(1)
@@ -299,11 +350,30 @@ KodiPage {
                                     height: thumbnailImage.height
                                 }
                             }
+
+                            Icon {
+                                anchors.centerIn: parent
+                                width: Math.min(parent.width, parent.height) - units.gu(1)
+                                height: width
+                                name: {
+                                    switch (root.model.mediaFormat) {
+                                    case KodiModel.MediaFormatAudio:
+                                        return "audio-x-generic-symbolic";
+                                    case KodiModel.MediaFormatVideo:
+                                        return "video-x-generic-symbolic";
+                                    case KodiModel.MediaFormatPictures:
+                                        return "image-x-generic-symbolic";
+                                    }
+                                    return "empty-symbolic";
+                                }
+                                color: "white"
+                                visible: !thumbnail || thumbnail == "loading"
+                            }
                         }
                     }
                     Column {
                         anchors { verticalCenter: parent.verticalCenter }
-                        width: parent.width - x
+                        Layout.fillWidth: true
                         height: childrenRect.height
                         spacing: units.gu(.5)
 
@@ -317,7 +387,6 @@ KodiPage {
                             text: subtitle + (year.length > 0 ? '\n' + year : "")
                             height: text.length == 0 ? 0 : implicitHeight
                             fontSize: "small"
-                            color: Theme.palette.normal.backgroundText
                             wrapMode: Text.WordWrap
                             maximumLineCount: index >= 0 && root.model.getItem(filterModel.mapToSourceIndex(index)).type === "channel" ? 2 : 3
                         }
@@ -342,12 +411,31 @@ KodiPage {
                             }
                         }
                     }
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: units.gu(2)
+                        Icon {
+                            width: parent.width
+                            height: width
+                            color: "white"
+                            name: "go-next"
+                            visible: filetype == "directory"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        Icon {
+                            anchors {
+                                right: parent.right
+                                bottom: parent.bottom
+                                //bottomMargin: units.gu(1)
+                            }
+                            width: parent.width
+                            height: width
+                            visible: playcount > 0 || resume > 0
+                            name: resume > 0 ? "media-playback-start" : "tick"
+                            color: "white"
+                        }
+                    }
                 }
-
-
-                progression: filetype == "directory"
-                opacity: delegateItem.expanded ? 0.6 : 1
-
 
                 MouseArea {
                     anchors.fill: parent
@@ -355,19 +443,7 @@ KodiPage {
                     onClicked: delegateItem.expanded = false
                 }
 
-                Icon {
-                    anchors {
-                        right: parent.right
-                        bottom: parent.bottom
-                        bottomMargin: units.gu(1)
-                    }
-                    width: units.gu(2)
-                    height: width
-                    visible: playcount > 0
-                    source: "image://theme/tick"
-                    color: "white"
-                }
-                onClicked: {
+                onItemClicked: {
                     if(filetype === "directory") {
                         var component = Qt.createComponent("BrowserPage.qml")
                         if (component.status === Component.Ready) {
@@ -378,11 +454,11 @@ KodiPage {
                             console.log("Error loading component:", component.errorString());
                         }
                     } else {
-                        root.model.playItem(filterModel.mapToSourceIndex(index));
+                        delegateItem.playItem();
                     }
                 }
 
-                onPressAndHold: {
+                onItemPressAndHold: {
                     if (root.model.hasDetails()) {
                         root.model.fetchItemDetails(filterModel.mapToSourceIndex(index))
                         delegateItem.expanded = true
@@ -474,13 +550,13 @@ KodiPage {
             source: "image://theme/go-home"
             Layout.fillWidth: true
             onClicked: {
-                while (pageStack.depth > 1) {
-                    pageStack.pop()
-                }
+                print("pageStack depth:", pageStack.depth)
+                pageStack.clear();
+                pageStack.push(mainPage)
             }
         }
         BottomEdgeButton {
-            text: qsTr("Show watched")
+            text: filterModel.hideWatched ? qsTr("Show watched") : qsTr("Hide watched")
             source: filterModel.hideWatched ? "../images/unchecked.svg" : "image://theme/select"
             visible: model.allowWatchedFilter
             Layout.fillWidth: true

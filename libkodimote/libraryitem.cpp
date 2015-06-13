@@ -75,6 +75,7 @@ void LibraryItem::init()
     m_comment = QString();
     m_playcount = -1;
     m_cast = QString();
+    m_resume = 0;
 
 }
 
@@ -168,6 +169,10 @@ QVariant LibraryItem::data(int role) const
         return m_playcount;
     case KodiModel::RoleCast:
         return m_cast;
+    case KodiModel::RoleResume:
+        return m_resume;
+    case KodiModel::RoleResumeString:
+        return resumeString();
     }
 
     return KodiModelItem::data(role);
@@ -485,8 +490,14 @@ QString LibraryItem::year() const
 
 void LibraryItem::setYear(const QString &year)
 {
-    m_year = year;
-    emit yearChanged();
+    if (year == "0") {
+        //can't change year, as it's const
+        m_year = QString();
+        emit yearChanged();
+    } else {
+        m_year = year;
+        emit yearChanged();
+    }
 }
 
 QString LibraryItem::director() const
@@ -666,6 +677,27 @@ void LibraryItem::setCast(const QString &cast)
 {
     m_cast = cast;
     emit castChanged();
+}
+
+int LibraryItem::resume() const
+{
+    return m_resume;
+}
+
+QString LibraryItem::resumeString() const
+{
+    QTime time = QTime(0, 0, 0).addSecs(m_resume);
+    if (m_duration.hour() > 0) {
+        return time.toString("hh:mm:ss");
+    } else {
+        return time.toString("mm:ss");
+    }
+}
+
+void LibraryItem::setResume(int resume)
+{
+    m_resume = resume;
+    emit resumeChanged();
 }
 
 void LibraryItem::imageFetched(int id)

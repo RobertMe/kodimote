@@ -28,6 +28,7 @@
 #include <QStringList>
 
 class Playlist;
+class PlaylistItem;
 class LibraryItem;
 
 class Player : public QObject
@@ -41,7 +42,9 @@ class Player : public QObject
     Q_PROPERTY(QString state READ state NOTIFY stateChanged)
     Q_PROPERTY(int speed READ speed NOTIFY speedChanged)
     Q_PROPERTY(double percentage READ percentage NOTIFY percentageChanged)
-    Q_PROPERTY(QString time READ time NOTIFY timeChanged)
+    Q_PROPERTY(QString timeString READ timeString NOTIFY timeChanged)
+    Q_PROPERTY(QTime totalTime READ totalTime NOTIFY currentItemChanged)
+    Q_PROPERTY(QString totalTimeString READ totalTimeString NOTIFY currentItemChanged)
     Q_PROPERTY(bool timerActive READ timerActive WRITE setTimerActive)
     Q_PROPERTY(bool shuffle READ shuffle WRITE setShuffle NOTIFY shuffleChanged)
     Q_PROPERTY(Repeat repeat READ repeat WRITE setRepeat NOTIFY repeatChanged)
@@ -73,9 +76,11 @@ public:
     QString state() const;
     int speed() const;
     double percentage() const;
-    QString time() const;
+    QTime time() const;
+    QString timeString() const;
+    QTime totalTime() const;
+    QString totalTimeString() const;
 
-    void refresh();
     void detach();
 
     PlayerType type() const;
@@ -86,6 +91,7 @@ public:
 
     /// play the given item from the playlist
     Q_INVOKABLE void playItem(int index);
+    virtual void open(const PlaylistItem &item, bool resume = false);
 
     bool shuffle() const;
     void setShuffle(bool shuffle);
@@ -105,8 +111,12 @@ public:
     void setTimerActive(bool active);
 
     Q_INVOKABLE void seek(double percentage);
+    void seek(QTime time);
 
     LibraryItem* currentItem() const;
+
+    QTime calculateTime(double percentage) const;
+    Q_INVOKABLE QString calculateTimeString(double percentage) const;
 
 signals:
     void stateChanged();
@@ -129,28 +139,25 @@ public slots:
     void skipNext();
     void seekBackward();
     void seekForward();
+    void refresh();
+    void updatePlaytime();
 
 private slots:
-    void getSpeed();
-    void getPlaytime();
-    void getPosition();
     void receivedAnnouncement(const QVariantMap& map);
-    void updatePlaytime();
     void getRepeatShuffle();
     void getMediaProps();
 
     void getCurrentItemDetails();
 
-    void speedReceived(const QVariantMap &rsp);
-    void playtimeReceived(const QVariantMap &rsp);
-    void positionReceived(const QVariantMap &rsp);
     void repeatShuffleReceived(const QVariantMap &rsp);
     void detailsReceived(const QVariantMap &rsp);
     void refreshReceived(const QVariantMap &rsp);
     void mediaPropsReceived(const QVariantMap &rsp);
 
 private:
-    void updatePlaytime(const QVariantMap &time);
+    void updatePlaytime(const QVariantMap &timeMap);
+    QTime parseTime(const QVariantMap &timeMap) const;
+    QString formatTime(const QTime &time) const;
 
 protected:
     PlayerType m_type;
@@ -163,6 +170,7 @@ protected:
     LibraryItem* m_currentItem;
     bool m_seeking;
     bool m_timerActivated;
+    QTime m_totalTime;
 
     bool m_shuffle;
     Repeat m_repeat;

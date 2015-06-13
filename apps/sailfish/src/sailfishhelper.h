@@ -26,27 +26,29 @@
 #include <QDBusMessage>
 #include <QDBusObjectPath>
 #include <QObject>
+#include <QQuickView>
+
+#include "libkodimote/platformhelper.h"
 
 class Settings;
 
-class SailfishHelper : public QObject
+class SailfishHelper : public PlatformHelper
 {
     Q_OBJECT
 public:
-    explicit SailfishHelper(Settings *settings, QObject *parent = 0);
+    explicit SailfishHelper(QQuickView *quickView, Settings *settings, QObject *parent = 0);
     
+    bool canRaise() const;
+    void raise();
+
 private slots:
     void callAdded(const QDBusMessage &msg);
-    void callRemoved();
 
 private:
     QString lookupContact(QString phoneNumber);
     QMap<QString, QString> unpackMessage(const QDBusArgument &args);
 
-    Settings *m_settings;
-
-    bool m_videoPaused;
-    bool m_musicPaused;
+    QQuickView *m_quickView;
 };
 
 #endif // SAILFISHHELPER_H

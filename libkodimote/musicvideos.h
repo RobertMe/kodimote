@@ -32,13 +32,15 @@ public:
     explicit MusicVideos(bool recentlyAdded, KodiModel *parent = 0);
 
     KodiModel *enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     QString title() const;
 
     Q_INVOKABLE void fetchItemDetails(int index);
     Q_INVOKABLE bool hasDetails() { return true; }
+
+    MediaFormat mediaFormat() const { return MediaFormatVideo; }
 
 public slots:
     void refresh();

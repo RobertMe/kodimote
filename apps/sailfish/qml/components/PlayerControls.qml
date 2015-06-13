@@ -54,14 +54,14 @@ Row {
         icon.source: "../icons/icon-m-stop.png"
         icon.height: 75; icon.width: 75
         height: 75; width: 75
-        enabled: player ? player.state == "playing" : false
+        enabled: player ? player.state !== "stopped" : false
         onClicked: {
             playerControls.player.stop()
         }
     }
 
     IconButton {
-        icon.source: "image://theme/icon-m-" + (playerControls.player && playerControls.player.state === "playing" ? "pause" : "play")
+        icon.source: "image://theme/icon-m-" + (player && player.speed === 1 && player.state === "playing" ? "pause" : "play")
         icon.height: 75; icon.width: 75
         height: 75; width: 75
         enabled: !!player

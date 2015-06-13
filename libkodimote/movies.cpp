@@ -48,27 +48,13 @@ void Movies::receivedAnnouncement(const QVariantMap &map)
 
     QVariantMap data = map.value("params").toMap().value("data").toMap();
 
-    QVariant playcount = data.value("playcount");
-    if(!playcount.isValid() || playcount.toInt() < 0) {
-        return;
-    }
-
     QString type = data.value("item").toMap().value("type").toString();
     int id = data.value("item").toMap().value("id").toInt();
     if(type != "movie" || !m_idIndexMapping.contains(id)) {
         return;
     }
 
-    int i = m_idIndexMapping.value(id);
-    LibraryItem *item = qobject_cast<LibraryItem*>(m_list.at(i));
-
-    if(playcount.toInt() == item->playcount()) {
-        return;
-    }
-
-
-    item->setPlaycount(playcount.toInt());
-    dataChanged(index(i, 0, QModelIndex()), index(i, 0, QModelIndex()));
+    refresh();
 }
 
 void Movies::refresh()
@@ -81,6 +67,7 @@ void Movies::refresh()
     properties.append("file");
     properties.append("genre");
     properties.append("year");
+    properties.append("resume");
     params.insert("properties", properties);
 
 
@@ -180,6 +167,7 @@ void Movies::listReceived(const QVariantMap &rsp)
         item->setIgnoreArticle(ignoreArticle());
         item->setFileType("file");
         item->setPlayable(true);
+        item->setResume(itemMap.value("resume").toMap().value("position").toInt());
         list.append(item);
         m_idIndexMapping.insert(item->movieId(), index++);
     }
@@ -214,12 +202,10 @@ KodiModel *Movies::enterItem(int index)
     return 0;
 }
 
-void Movies::playItem(int index)
+void Movies::playItem(int index, bool resume)
 {
-    Kodi::instance()->videoPlayer()->playlist()->clear();
     VideoPlaylistItem item(m_list.at(index)->data(RoleMovieId).toInt());
-    Kodi::instance()->videoPlayer()->playlist()->addItems(item);
-    Kodi::instance()->videoPlayer()->playItem(0);
+    Kodi::instance()->videoPlayer()->open(item, resume);
 }
 
 void Movies::addToPlaylist(int row)

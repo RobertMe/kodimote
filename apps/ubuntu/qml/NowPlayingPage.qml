@@ -18,9 +18,9 @@
  *                                                                           *
  ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.1
+import Ubuntu.Components 1.2
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0
 import Kodi 1.0
@@ -284,28 +284,8 @@ KodiPage {
                             // Center label on mouseX
                             progressBarLabel.x = mouseX - progressBarLabel.width / 2;
 
-                            // Calculate time under mouseX
-                            var progressedWidth = mouseX - progressBar.x;
-                            var targetTime = progressedWidth * currentItem.durationInSecs / progressBar.width;
-                            targetTime = Math.min(targetTime, currentItem.durationInSecs);
-                            targetTime = Math.max(targetTime, 0);
-                            print("currentItem", currentItem.durationInSecs)
-
-                            // Translate to human readable time
-                            var hours = Math.floor(targetTime / 60 / 60);
-                            var minutes = Math.floor(targetTime / 60) % 60;
-                            if(minutes < 10) minutes = "0" + minutes;
-                            var seconds = Math.floor(targetTime) % 60;
-                            if(seconds < 10) seconds = "0" + seconds;
-
-                            // Write into the label
-                            if(currentItem.durationInSecs < 60 * 60) {
-                                progressBarLabelText.text = minutes + ":" + seconds;
-                            } else {
-                                progressBarLabelText.text = hours + ":" + minutes + ":" + seconds;
-                            }
+                            progressBarLabelText.text = player.calculateTimeString(mouseX * 100 / width);
                             mouse.accepted = true
-                            print("mouse accepted")
                         }
                         onReleased: {
                             player.seek(mouseX * 100 / width)
@@ -318,12 +298,12 @@ KodiPage {
                     spacing: root.spacing
                     Label {
                         id: currentTime
-                        text: player ? player.time : "00:00"
+                        text: player ? player.timeString : "00:00"
                         width: (parent.width - parent.spacing) / 2
                     }
 
                     Label {
-                        text: currentItem ? currentItem.durationString : "00:00"
+                        text: player.totalTimeString
                         horizontalAlignment: Text.AlignRight
                         width: (parent.width - parent.spacing) / 2
                     }

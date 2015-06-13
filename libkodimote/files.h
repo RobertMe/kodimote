@@ -23,6 +23,8 @@
 
 #include "kodilibrary.h"
 
+class Player;
+
 class Files : public KodiLibrary
 {
     Q_OBJECT
@@ -30,11 +32,22 @@ public:
     explicit Files(const QString &mediaType, const QString &dir, KodiModel *parent = 0);
 
     KodiModel *enterItem(int index);
-    void playItem(int index);
+    void playItem(int index, bool resume = false);
     void addToPlaylist(int index);
 
     QString title() const;
     Q_INVOKABLE void download(int index, const QString &path);
+
+    MediaFormat mediaFormat() const {
+        if (m_mediaType == "music") {
+            return MediaFormatAudio;
+        } else if (m_mediaType == "video") {
+            return MediaFormatVideo;
+        } else if (m_mediaType == "pictures") {
+            return MediaFormatPictures;
+        }
+        return MediaFormatUnknown;
+    }
 
 public slots:
     void refresh();
@@ -46,6 +59,7 @@ protected:
     QString m_mediaType;
     QString m_dir;
     bool m_sort;
+    Player *m_player;
 
     virtual QString parseTitle(const QString &title) const;
     virtual bool filterFile(const QVariantMap &item) const;

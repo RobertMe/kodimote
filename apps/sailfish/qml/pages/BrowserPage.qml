@@ -31,6 +31,15 @@ Page {
 
     signal home();
 
+    Component.onCompleted: {
+        var setting = model.watchedFilterSetting;
+        if (setting) {
+            settings[setting + 'Changed'].connect(function() {
+                filterModel.hideWatched = !settings[setting];
+            });
+        }
+    }
+
     Component.onDestruction: {
         if (model) {
             model.exit();
@@ -41,6 +50,14 @@ Page {
         id: filterModel
         model: browserPage.model
         filterCaseSensitivity: Qt.CaseInsensitive
+        hideWatched: model.watchedFilterSetting ? !settings[model.watchedFilterSetting] : false
+
+        onHideWatchedChanged: {
+            var setting = model.watchedFilterSetting;
+            if (setting) {
+                settings[setting] = !hideWatched;
+            }
+        }
     }
 
     SilicaFlickable {
@@ -103,7 +120,7 @@ Page {
             cacheBuffer: itemHeight * 3
 
             property bool useThumbnails: settings.useThumbnails
-            property int itemHeight: browserPage.model && browserPage.model.thumbnailFormat === KodiModel.ThumbnailFormatPortrait ? 122 : 88
+            property int itemHeight: browserPage.model && browserPage.model.thumbnailFormat === KodiModel.ThumbnailFormatPortrait ? 126 : 92
 
             delegate: Drawer {
                 id: drawer
@@ -111,6 +128,20 @@ Page {
                 width: parent.width
                 height: opened && listView.height * drawer._progress > contentItem.height ? listView.height * drawer._progress : contentItem.height
                 dock: Dock.Bottom
+
+                function playItem() {
+                    if (resume === 0) {
+                        browserPage.model.playItem(filterModel.mapToSourceIndex(index));
+                    } else {
+                        var dialog = pageStack.push("ResumeDialog.qml", {item: model});
+                        dialog.onAccepted.connect(function() {
+                            browserPage.model.playItem(filterModel.mapToSourceIndex(index), true);
+                        });
+                        dialog.onRejected.connect(function() {
+                            browserPage.model.playItem(filterModel.mapToSourceIndex(index));
+                        });
+                    }
+                }
 
                 background: Item {
                     anchors.fill: parent
@@ -128,8 +159,7 @@ Page {
                             target: contentLoader.item
 
                             onPlayItem: {
-                                print("playItem()!")
-                                browserPage.model.playItem(filterModel.mapToSourceIndex(index))
+                                drawer.playItem();
                             }
 
                             onAddToPlaylist: {
@@ -143,18 +173,18 @@ Page {
 
                 ListItem {
                     id: contentItem
-                    height: listView.itemHeight
                     contentHeight: listView.itemHeight
                     width: parent.width
                     anchors.topMargin: Theme.paddingSmall
                     anchors.rightMargin: Theme.paddingSmall
+                    showMenuOnPressAndHold: playable && !browserPage.model.hasDetails()
 
                     onPressed: {
                         listView.currentIndex = index
                     }
 
                     onPressAndHold: {
-                        if(browserPage.model.hasDetails()) {
+                        if (browserPage.model.hasDetails()) {
                             browserPage.model.fetchItemDetails(filterModel.mapToSourceIndex(listView.currentIndex));
                             drawer.open = true;
                         }
@@ -172,20 +202,33 @@ Page {
                                     browserPage.home();
                                 });
                             } else {
-                                browserPage.model.playItem(filterModel.mapToSourceIndex(index));
+                                drawer.playItem();
                             }
                         }
                     }
 
                     Rectangle {
                         id: highlightBar
-                        color: Theme.highlightColor
+                        color: resume <= 0 ? Theme.highlightColor : Theme.secondaryHighlightColor
                         width: 8
                         anchors.top: thumbnailImage.top
                         anchors.bottom: thumbnailImage.bottom
                         anchors.right: thumbnailImage.left
                         anchors.rightMargin: 2
-                        visible: playcount === 0
+                        visible: playcount === 0 || resume > 0
+                    }
+
+                    menu: Component {
+                        ContextMenu {
+                            MenuItem {
+                                text: qsTr("Play")
+                                onClicked: drawer.playItem()
+                            }
+                            MenuItem {
+                                text: qsTr("Add to playlist")
+                                onClicked: browserPage.model.addToPlaylist(filterModel.mapToSourceIndex(index))
+                            }
+                        }
                     }
 
                     Thumbnail {
@@ -195,7 +238,7 @@ Page {
 
                         anchors.left: parent.left
                         anchors.leftMargin: Theme.paddingLarge
-                        anchors.top: parent.top
+                        anchors.verticalCenter: parent.verticalCenter
                         visible: listView.useThumbnails && browserPage.model.thumbnailFormat !== KodiModel.ThumbnailFormatNone
 
                         artworkSource: thumbnail
@@ -224,21 +267,23 @@ Page {
                             leftMargin: (thumbnailImage.visible ? Theme.paddingMedium : Theme.paddingLarge);
                             top: parent.top;
                             right: parent.right;
-                            rightMargin: Theme.paddingSmall
+                            rightMargin: Theme.paddingLarge
                         }
                         height: listView.itemHeight
 
                         Column {
                             anchors.verticalCenter: parent.verticalCenter
 
-                            Text {
+                            Label {
                                 id: mainText
                                 text: title
                                 font.weight: Font.Bold
                                 font.pixelSize: Theme.fontSizeMedium
                                 width: itemRow.width
-                                elide: Text.ElideRight
+                                truncationMode: TruncationMode.Fade
                                 color: Theme.primaryColor
+                                height: font.pixelSize
+                                verticalAlignment: Text.AlignVCenter
 
                                 states: [
                                     State {
@@ -255,8 +300,10 @@ Page {
                                 font.pixelSize: Theme.fontSizeSmall
                                 color: Theme.secondaryColor
                                 width: mainText.width
-                                elide: Text.ElideRight
+                                truncationMode: TruncationMode.Fade
                                 visible: text != ""
+                                height: font.pixelSize
+                                verticalAlignment: Text.AlignVCenter
                             }
 
                             Label {
@@ -266,8 +313,10 @@ Page {
                                 font.pixelSize: Theme.fontSizeSmall
                                 color: Theme.secondaryColor
                                 width: mainText.width
-                                elide: Text.ElideRight
+                                truncationMode: TruncationMode.Fade
                                 visible: text != ""
+                                height: font.pixelSize
+                                verticalAlignment: Text.AlignVCenter
                             }
                         }
                     }
@@ -364,8 +413,9 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: -14
                     checked: !filterModel.hideWatched
-                    onCheckedChanged: {
-                        filterModel.hideWatched = !checked
+                    automaticCheck: false
+                    onClicked: {
+                        filterModel.hideWatched = !filterModel.hideWatched
                     }
                 }
 
